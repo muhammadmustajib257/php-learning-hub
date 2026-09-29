@@ -40,12 +40,24 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 .quiz-option{display:block;width:100%;text-align:left;padding:11px;border:1px solid var(--line);background:#fff;border-radius:9px;margin:7px 0}.quiz-option.correct{background:#f0fdf4;border-color:#86efac}.quiz-option.wrong{background:#fef2f2;border-color:#fca5a5}
 .mobile{display:none}
 @media(max-width:950px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile{display:inline-block}.grid{grid-template-columns:1fr}.hero{flex-direction:column;align-items:flex-start}.top{padding:0 13px}.content{padding:20px 13px 50px}}
+
+/* Final simulator enhancements */
+.simulator-status{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 12px}
+.sim-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800;background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.sim-badge.warn{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+.sim-badge.info{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+.sim-help{padding:12px 14px;border-radius:12px;background:#f8fafc;border:1px solid var(--line);color:#475569;font-size:13px;line-height:1.6;margin-bottom:12px}
+.sim-help b{color:#172033}
+.output.success{border-color:#86efac;background:#f0fdf4}
+.output.warn{border-color:#fdba74;background:#fff7ed}
+.output.error{border-color:#fca5a5;background:#fef2f2}
+.run-meta{font-size:12px;color:#64748b;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar" id="sidebar">
-<div class="brand"><div class="logo">&lt;?&gt;</div><div><h1>PHP Learning Hub</h1><small>Belajar Mandiri Kelas XI RPL</small></div></div>
+<div class="brand"><div class="logo">&lt;?&gt;</div><div><h1>PHP Learning Hub</h1><small>Belajar Mandiri Kelas X RPL</small></div></div>
 <div class="pbox"><div class="ptop"><span>Progress belajar</span><b id="pct">0%</b></div><div class="bar"><span id="bar"></span></div></div>
 <div class="nav">
 <div class="ntitle">Navigasi</div>
@@ -552,72 +564,215 @@ function lesson(i){
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function playground(i,codeText){
- return `<div class="playground"><div class="play-head"><h3>🧪 Coba Program Sendiri</h3><div><button class="btn" onclick="loadExample(${i})">Muat Contoh</button> <button class="btn" onclick="saveCode(${i})">Simpan</button> <button class="btn green" onclick="runCode(${i})">▶ Jalankan</button></div></div>
- <p class="simnote">Simulator mendukung latihan PHP dasar seperti echo, variabel sederhana, operasi hitung, if/elseif/else, for, dan array/foreach. Untuk fitur database, jalankan PHP asli melalui XAMPP.</p>
+ return `<div class="playground">
+ <div class="play-head"><h3>🧪 Coba Program Sendiri</h3><div><button class="btn" onclick="loadExample(${i})">Muat Contoh</button> <button class="btn" onclick="saveCode(${i})">Simpan</button> <button class="btn green" onclick="runCode(${i})">▶ Jalankan</button></div></div>
+ <div class="simulator-status"><span class="sim-badge">🟢 Simulator PHP Dasar</span><span class="sim-badge info">🌐 Berjalan di browser</span></div>
+ <div class="sim-help"><b>Yang bisa dicoba:</b> <code>echo</code>, variabel, string, operasi hitung, <code>if / elseif / else</code>, <code>for</code>, <code>while</code>, <code>foreach</code>, array sederhana, dan fungsi sederhana.<br><b>Catatan:</b> kode <code>mysqli</code>, MySQL/MariaDB, <code>PDO</code>, file <code>include/require</code>, dan fitur server PHP tidak dijalankan oleh simulator ini. Gunakan XAMPP untuk praktik PHP asli.</div>
  <textarea id="editor${i}" class="editor" spellcheck="false">${esc(codeText)}</textarea>
- <div class="out-title">Output</div><div id="output${i}" class="output">Klik "Jalankan" untuk melihat hasil.</div></div>`;
+ <div class="out-title">Output</div><div id="output${i}" class="output">Klik "Jalankan" untuk melihat hasil.</div><div id="runmeta${i}" class="run-meta"></div></div>`;
 }
-function loadExample(i){document.getElementById("editor"+i).value=lessons[i].examples[0][1];document.getElementById("output"+i).textContent="Contoh dimuat. Klik Jalankan."}
-function saveCode(i){savedCodes[i]=document.getElementById("editor"+i).value;localStorage.setItem("phpHubCodes",JSON.stringify(savedCodes));alert("Kode tersimpan di browser ini.");}
-function stripPhp(s){return s.replace(/<\?php/g,"").replace(/\?>/g,"").trim()}
+function loadExample(i){
+ const ed=document.getElementById("editor"+i); if(!ed)return;
+ ed.value=lessons[i].examples[0][1];
+ document.getElementById("output"+i).className="output";
+ document.getElementById("output"+i).textContent="Contoh dimuat. Klik Jalankan.";
+ const m=document.getElementById("runmeta"+i); if(m)m.textContent="Contoh materi siap diuji.";
+}
+function saveCode(i){
+ const ed=document.getElementById("editor"+i); if(!ed)return;
+ savedCodes[i]=ed.value;localStorage.setItem("phpHubCodes",JSON.stringify(savedCodes));
+ const m=document.getElementById("runmeta"+i);if(m)m.textContent="✓ Kode tersimpan di browser perangkat ini.";
+}
+function simEscape(v){
+ return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function stripPhp(s){return s.replace(/<\?php\s*/gi,"").replace(/<\?=\s*/gi,"").replace(/\?>/g,"");}
+function splitTopLevel(text,separator){
+ let parts=[],start=0,quote=null,depth=0;
+ for(let i=0;i<text.length;i++){
+   const c=text[i];
+   if(quote){if(c==="\\" && i+1<text.length){i++;continue;} if(c===quote)quote=null;continue;}
+   if(c==='"'||c==="'"){quote=c;continue;}
+   if(c==='('||c==='[')depth++; else if(c===')'||c===']')depth--;
+   if(depth===0 && text.slice(i,i+separator.length)===separator){parts.push(text.slice(start,i));start=i+separator.length;i+=separator.length-1;}
+ }
+ parts.push(text.slice(start)); return parts;
+}
+function findTopOperator(expr,ops){
+ let quote=null,depth=0;
+ for(let i=expr.length-1;i>=0;i--){
+   const c=expr[i];
+   if(quote){if(c===quote && expr[i-1]!=="\\")quote=null;continue;}
+   if(c==='"'||c==="'"){quote=c;continue;}
+   if(c===')'||c===']')depth++; else if(c==='('||c==='[')depth--;
+   if(depth!==0)continue;
+   for(const op of ops){const st=i-op.length+1;if(st>=0&&expr.slice(st,i+1)===op)return {index:st,op};}
+ }
+ return null;
+}
 function phpValue(v,vars){
- v=v.trim();
- if(/^["'].*["']$/.test(v))return v.slice(1,-1).replace(/\n/g,"\n").replace(/\"/g,'"');
- if(/^true$/i.test(v))return true;if(/^false$/i.test(v))return false;
- if(vars[v]!==undefined)return vars[v];
- // replace variables inside a basic expression
- let expr=v.replace(/\$[A-Za-z_]\w*/g,m=>JSON.stringify(vars[m]??0));
- if(/^[0-9+\-*/%().\s]+$/.test(expr)){try{return Function("return "+expr)()}catch(e){}}
- return v;
+ v=String(v).trim();
+ while(v.startsWith('(')&&v.endsWith(')')){let d=0,ok=true,q=null;for(let i=0;i<v.length;i++){let c=v[i];if(q){if(c===q&&v[i-1]!=="\\")q=null;continue;}if(c==='"'||c==="'"){q=c;continue;}if(c==='(')d++;if(c===')')d--;if(d===0&&i<v.length-1){ok=false;break;}}if(ok)v=v.slice(1,-1).trim();else break;}
+ if(/^"[\s\S]*"$/.test(v)||/^'[\s\S]*'$/.test(v)){
+   let str=v.slice(1,-1);
+   str=str.replace(/\\n/g,"\n").replace(/\\t/g,"\t").replace(/\\"/g,'"').replace(/\\'/g,"'").replace(/\\\\/g,"\\");
+   return interpolate(str,vars);
+ }
+ if(/^true$/i.test(v))return true;if(/^false$/i.test(v))return false;if(/^null$/i.test(v))return null;
+ if(/^\d+(\.\d+)?$/.test(v))return Number(v);
+ if(/^\$[A-Za-z_]\w*$/.test(v))return vars[v]??"";
+ if(/^count\s*\(\s*\$[A-Za-z_]\w*\s*\)$/i.test(v)){const n=v.match(/\$(\w+)/)[1];const a=vars["$"+n];return Array.isArray(a)?a.length:0;}
+ const call=v.match(/^([A-Za-z_]\w*)\s*\((.*)\)$/s);
+ if(call && vars.__functions && vars.__functions[call[1]]){
+   const fn=vars.__functions[call[1]],local={...vars},params=fn.params.split(',').map(x=>x.trim()).filter(Boolean),vals=splitTopLevel(call[2],",");
+   params.forEach((p,idx)=>{const pm=p.match(/\$(\w+)/);if(pm)local["$"+pm[1]]=phpValue(vals[idx]||"",vars);});
+   const rm=fn.body.match(/return\s+([\s\S]*?);/i);
+   return rm?phpValue(rm[1],local):executeBlockProgram(fn.body,local);
+ }
+ if(/^strlen\s*\(/i.test(v)){const inner=v.replace(/^strlen\s*\(/i,"").replace(/\)$/,'');return String(phpValue(inner,vars)).length;}
+ if(/^\[/.test(v)&&/\]$/.test(v)){const inside=v.slice(1,-1).trim();if(!inside)return [];return splitTopLevel(inside,",").map(x=>phpValue(x,vars));}
+ if(/^array\s*\(/i.test(v)&&/\)$/.test(v)){const inside=v.replace(/^array\s*\(/i,"").slice(0,-1).trim();if(!inside)return [];return splitTopLevel(inside,",").map(x=>phpValue(x,vars));}
+ const concat=splitTopLevel(v,'.');if(concat.length>1)return concat.map(x=>String(phpValue(x,vars))).join("");
+ const cmp=findTopOperator(v,["===","!==","==","!=","<=",">=","<",">"]);
+ if(cmp){const a=phpValue(v.slice(0,cmp.index),vars),b=phpValue(v.slice(cmp.index+cmp.op.length),vars);switch(cmp.op){case"===":return a===b;case"!==":return a!==b;case"==":return a==b;case"!=":return a!=b;case"<=":return a<=b;case">=":return a>=b;case"<":return a<b;case">":return a>b;}}
+ const logicOr=splitTopLevel(v,"||");if(logicOr.length>1)return logicOr.some(x=>Boolean(phpValue(x,vars)));
+ const logicAnd=splitTopLevel(v,"&&");if(logicAnd.length>1)return logicAnd.every(x=>Boolean(phpValue(x,vars)));
+ if(v.startsWith('!'))return !phpValue(v.slice(1),vars);
+ const expr=v.replace(/\$[A-Za-z_]\w*/g,m=>String(Number(vars[m]??0))).replace(/;\s*$/,"").trim();
+ if(/^[0-9+\-*/%().\s]+$/.test(expr)){try{return Function("\"use strict\";return ("+expr+")")();}catch(e){}}
+ return interpolate(v,vars);
+}
+function interpolate(str,vars){return String(str).replace(/\$[A-Za-z_]\w*/g,m=>String(vars[m]??""));}
+function stripComments(s){return s.replace(/\/\/.*$/gm,"").replace(/#.*$/gm,"");}
+function extractBalancedBlock(s,openIndex){
+ let depth=0,quote=null;
+ for(let i=openIndex;i<s.length;i++){
+   const c=s[i];
+   if(quote){if(c===quote&&s[i-1]!=="\\")quote=null;continue;}
+   if(c==='"'||c==="'"){quote=c;continue;}
+   if(c==='{')depth++; else if(c==='}'){depth--;if(depth===0)return {body:s.slice(openIndex+1,i),end:i};}
+ }
+ return null;
+}
+function findMatchingParen(s,openIndex){
+ let depth=0,quote=null;
+ for(let i=openIndex;i<s.length;i++){const c=s[i];if(quote){if(c===quote&&s[i-1]!=="\\")quote=null;continue;}if(c==='"'||c==="'"){quote=c;continue;}if(c==='(')depth++;else if(c===')'){depth--;if(depth===0)return i;}}return -1;
+}
+function parseArrayAssignment(line,vars){
+ const m=line.match(/^\s*(\$[A-Za-z_]\w*)\s*=\s*(\[[\s\S]*\]|array\s*\([\s\S]*\))\s*;?\s*$/);
+ if(!m)return false;vars[m[1]]=phpValue(m[2],vars);return true;
+}
+function parseAssignment(line,vars){
+ const m=line.match(/^\s*(\$[A-Za-z_]\w*)\s*(=|\+=|-=|\*=|\/=)\s*([\s\S]*?)\s*;\s*$/);
+ if(!m)return false;const name=m[1],val=phpValue(m[3],vars);if(m[2]==='=')vars[name]=val;else{const old=Number(vars[name]??0),n=Number(val??0);if(m[2]==='+=')vars[name]=old+n;if(m[2]==='-=')vars[name]=old-n;if(m[2]==='*=')vars[name]=old*n;if(m[2]==='/=')vars[name]=old/n;}return true;
+}
+function executeEcho(expr,vars){
+ expr=String(expr).trim().replace(/;\s*$/," ").trim();
+ return splitTopLevel(expr,",").map(x=>String(phpValue(x,vars))).join("").replace(/<br\s*\/?\s*>/gi,"\n");
+}
+function executeSimpleStatements(s,vars){
+ let out="";
+ const statements=splitStatements(s);
+ for(let raw of statements){let line=raw.trim();if(!line)continue;
+   line=line.replace(/^;+/,'').trim();
+   if(/^echo\s+/i.test(line)){out+=executeEcho(line.replace(/^echo\s+/i,""),vars);continue;}
+   if(/^print\s+/i.test(line)){out+=String(phpValue(line.replace(/^print\s+/i,""),vars));continue;}
+   if(parseArrayAssignment(line,vars))continue;
+   if(parseAssignment(line,vars))continue;
+   const inc=line.match(/^\$(\w+)\s*(\+\+|--)\s*;?$/);if(inc){const k="$"+inc[1];vars[k]=Number(vars[k]??0)+(inc[2]==='++'?1:-1);continue;}
+   const assignIndex=line.match(/^\$(\w+)\s*\[\s*([^\]]+)\s*\]\s*=\s*(.*?)\s*;?$/);if(assignIndex){const arr="$"+assignIndex[1];if(!Array.isArray(vars[arr]))vars[arr]=[];vars[arr][phpValue(assignIndex[2],vars)]=phpValue(assignIndex[3],vars);continue;}
+ }
+ return out;
+}
+function splitStatements(s){
+ let parts=[],start=0,quote=null,depth=0;
+ for(let i=0;i<s.length;i++){const c=s[i];if(quote){if(c===quote&&s[i-1]!=="\\")quote=null;continue;}if(c==='"'||c==="'"){quote=c;continue;}if(c==='('||c==='['||c==='{')depth++;else if(c===')'||c===']'||c==='}')depth--;if(depth===0&&c===';'){parts.push(s.slice(start,i+1));start=i+1;}}
+ if(s.slice(start).trim())parts.push(s.slice(start));return parts;
+}
+function findControl(s,keyword,startAt=0){
+ const re=new RegExp("\\b"+keyword+"\\s*\\(","g");re.lastIndex=startAt;const m=re.exec(s);if(!m)return null;const open=s.indexOf('(',m.index);const close=findMatchingParen(s,open);if(close<0)return null;let p=close+1;while(/\s/.test(s[p]||''))p++;if(s[p]!=='{')return null;const block=extractBalancedBlock(s,p);if(!block)return null;return {start:m.index,condition:s.slice(open+1,close),body:block.body,end:block.end+1};
+}
+function executeBlockProgram(s,vars){
+ let out="",pos=0;
+ // Consume a leading array assignment so foreach examples work naturally.
+ const leadingArray=s.match(/^\s*(\$[A-Za-z_]\w*\s*=\s*(?:\[[\s\S]*?\]|array\s*\([\s\S]*?\))\s*;)\s*([\s\S]*)$/);
+ if(leadingArray && parseArrayAssignment(leadingArray[1],vars)){
+   return executeBlockProgram(leadingArray[2],vars);
+ }
+ // Fast path for common classroom loop patterns.
+ const simpleFor=/for\s*\(\s*(\$\w+)\s*=\s*(-?\d+)\s*;\s*\1\s*(<=|<|>=|>)\s*(-?\d+)\s*;\s*\1\s*(\+\+|--|\+=\s*\d+|-=\s*\d+)\s*\)\s*\{/;
+ const fm=s.match(simpleFor);
+ if(fm){
+   const brace=s.indexOf('{',fm.index),b=extractBalancedBlock(s,brace);
+   if(b && fm.index===0){let n=Number(fm[2]),limit=Number(fm[4]),guard=0;const op=fm[3],step=fm[5];while(guard++<100 && ((op==='<'&&n<limit)||(op==='<='&&n<=limit)||(op==='>'&&n>limit)||(op==='>='&&n>=limit))){vars[fm[1]]=n;out+=executeBlockProgram(b.body,vars);if(step==='++')n++;else if(step==='--')n--;else if(step.includes('+='))n+=Number(step.split('+=')[1]);else if(step.includes('-='))n-=Number(step.split('-=')[1]);}const rest=s.slice(b.end+1);if(rest.trim())out+=executeBlockProgram(rest,vars);return out;}
+ }
+ const simpleEach=s.match(/^\s*foreach\s*\(\s*(\$\w+)\s+as\s+(?:(\$\w+)\s*=>\s*)?(\$\w+)\s*\)\s*\{/);
+ if(simpleEach){const brace=s.indexOf('{',simpleEach.index),b=extractBalancedBlock(s,brace),arr=vars[simpleEach[1]];if(b&&Array.isArray(arr)){for(let idx=0;idx<arr.length;idx++){if(simpleEach[2])vars[simpleEach[2]]=idx;vars[simpleEach[3]]=arr[idx];out+=executeBlockProgram(b.body,vars);}const rest=s.slice(b.end+1);if(rest.trim())out+=executeBlockProgram(rest,vars);return out;}}
+
+ while(pos<s.length){
+   while(/\s|;/.test(s[pos]||''))pos++;if(pos>=s.length)break;
+   if(/^if\s*\(/.test(s.slice(pos))){
+     const first=findControl(s,"if",pos);if(!first||first.start!==pos){out+=executeSimpleStatements(s.slice(pos),vars);break;}
+     let chosen=null,end=first.end; if(Boolean(phpValue(first.condition,vars)))chosen=first.body;
+     let p=end;while(true){while(/\s/.test(s[p]||''))p++;if(s.slice(p).match(/^elseif\s*\(/)){const e=findControl(s,"elseif",p);if(!e)break;if(chosen===null&&Boolean(phpValue(e.condition,vars)))chosen=e.body;end=e.end;p=e.end;continue;}if(s.slice(p).match(/^else\s*\{/)){let brace=s.indexOf('{',p);const b=extractBalancedBlock(s,brace);if(b){if(chosen===null)chosen=b.body;end=b.end+1;p=end;} }break;}
+     if(chosen!==null)out+=executeBlockProgram(chosen,vars);pos=end;continue;
+   }
+   if(/^for\s*\(/.test(s.slice(pos))||/^foreach\s*\(/.test(s.slice(pos))||/^while\s*\(/.test(s.slice(pos))){
+     const kw=/^(for|foreach|while)/.exec(s.slice(pos))[1];const c=findControl(s,kw,pos);if(!c){out+=executeSimpleStatements(s.slice(pos),vars);break;}
+     if(kw==='for'){
+       const parts=splitTopLevel(c.condition,";");if(parts.length===3){let loopVars={...vars};executeSimpleStatements(parts[0]+";",loopVars);let guard=0;while(Boolean(phpValue(parts[1],loopVars))&&guard++<100){out+=executeBlockProgram(c.body,loopVars);executeSimpleStatements(parts[2]+";",loopVars);}}
+     }else if(kw==='while'){let guard=0;while(Boolean(phpValue(c.condition,vars))&&guard++<100)out+=executeBlockProgram(c.body,vars);}
+     else{
+       const fm=c.condition.match(/^\s*(\$\w+)\s+as\s+(?:(\$\w+)\s*=>\s*)?(\$\w+)\s*$/);if(fm){const arr=vars[fm[1]];if(Array.isArray(arr)){for(let idx=0;idx<arr.length;idx++){if(fm[2])vars[fm[2]]=idx;vars[fm[3]]=arr[idx];out+=executeBlockProgram(c.body,vars);}}}
+     }
+     pos=c.end;continue;
+   }
+   // function declarations: support simple no-argument functions returning a value
+   if(/^function\s+\w+\s*\(/.test(s.slice(pos))){const fm=s.slice(pos).match(/^function\s+(\w+)\s*\(([^)]*)\)\s*\{/);if(fm){const brace=pos+fm[0].lastIndexOf('{');const b=extractBalancedBlock(s,brace);if(b){const name=fm[1];vars.__functions=vars.__functions||{};vars.__functions[name]={params:fm[2],body:b.body};pos=b.end+1;continue;}}}
+   const nextBrace=s.indexOf('{',pos);const nextSemi=s.indexOf(';',pos);if(nextSemi>=0&&(nextBrace<0||nextSemi<nextBrace)){out+=executeSimpleStatements(s.slice(pos,nextSemi+1),vars);pos=nextSemi+1;continue;}
+   out+=executeSimpleStatements(s.slice(pos),vars);break;
+ }
+ return out;
+}
+function executeFunctionsAndReturn(code,vars){
+ // Replace simple function calls using stored zero/one-argument functions.
+ let safety=0;
+ while(safety++<20){let changed=false;code=code.replace(/([A-Za-z_]\w*)\s*\(([^()]*)\)/g,(all,name,args)=>{
+   if(name==='echo'||name==='print'||name==='count'||name==='strlen')return all;
+   const fn=vars.__functions&&vars.__functions[name];if(!fn)return all;
+   const local={...vars};const params=fn.params.split(',').map(x=>x.trim()).filter(Boolean);const vals=splitTopLevel(args,",");params.forEach((p,idx)=>{const pm=p.match(/\$(\w+)/);if(pm)local["$"+pm[1]]=phpValue(vals[idx]||"",vars);});
+   const rm=fn.body.match(/return\s+([\s\S]*?);/i);const result=rm?phpValue(rm[1],local):executeBlockProgram(fn.body,local);changed=true;return JSON.stringify(result);
+ });if(!changed)break;}
+ return code;
+}
+function detectUnsupported(code){
+ if(/\b(?:mysqli_|mysql_|PDO|new\s+PDO|pg_connect|sqlite_)/i.test(code))return "database";
+ if(/\b(?:include|include_once|require|require_once)\s*[(']/i.test(code))return "server";
+ if(/\b(?:session_start|header|setcookie|move_uploaded_file|mail)\s*\(/i.test(code))return "server";
+ return null;
 }
 function interp(s){
- s=stripPhp(s).replace(/\/\/.*$/gm,"");
- let out="",vars={};
- // Basic variable assignments
- const assign=/\$(\w+)\s*=\s*([^;]+);/g; let m;
- while((m=assign.exec(s))){vars["$"+m[1]]=phpValue(m[2],vars)}
- // for loops: very small educational subset
- s=s.replace(/for\s*\(\s*\$(\w+)\s*=\s*(\d+)\s*;\s*\$\1\s*<=\s*(\d+)\s*;\s*\$\1\+\+\s*\)\s*\{([\s\S]*?)\}/g,(all,v,start,end,body)=>{
-   let r="";for(let n=+start;n<=+end;n++)r+=executeStatements(body,{...vars,["$"+v]:n});return r;
- });
- // foreach simple indexed arrays
- s=s.replace(/foreach\s*\(\s*\$(\w+)\s+as\s+\$(\w+)\s*\)\s*\{([\s\S]*?)\}/g,(all,arr,v,body)=>{
-   let a=vars["$"+arr];if(!Array.isArray(a))return "";return a.map(val=>executeStatements(body,{...vars,["$"+v]:val})).join("");
- });
- // if/elseif/else basic numeric/string comparison
- s=handleIf(s,vars);
- out+=executeStatements(s,vars);
- return out||"(Tidak ada output yang didukung simulator)";
-}
-function handleIf(s,vars){
- const re=/if\s*\(\s*([^)]*)\s*\)\s*\{([\s\S]*?)\}\s*(?:elseif\s*\(\s*([^)]*)\s*\)\s*\{([\s\S]*?)\}\s*)?(?:else\s*\{([\s\S]*?)\})?/g;
- return s.replace(re,(all,c1,b1,c2,b2,be)=>{let ok=testCond(c1,vars);if(ok)return b1;if(c2&&testCond(c2,vars))return b2||"";return be||""});
-}
-function testCond(c,v){
- c=c.trim().replace(/\$/g,"");
- const ops=[">=","<=","==","!=","<",">"];
- for(const op of ops){if(c.includes(op)){let [a,b]=c.split(op);a=phpValue("$"+a.trim(),v);b=phpValue(b.trim(),v);switch(op){case">=":return a>=b;case"<=":return a<=b;case"==":return a==b;case"!=":return a!=b;case">":return a>b;case"<":return a<b}}}
- return !!phpValue(c,v);
-}
-function executeStatements(s,vars){
- let out="";
- // arrays
- s=s.replace(/\$(\w+)\s*=\s*\[([^\]]*)\];/g,(all,n,inside)=>{vars["$"+n]=inside.split(",").map(x=>phpValue(x,vars));return""});
- const echoRe=/echo\s+(.+?);/g;let m;
- while((m=echoRe.exec(s))){
-   let expr=m[1].trim();
-   // Concatenation
-   let parts=expr.split(/\s*\.\s*/);let val=parts.map(p=>String(phpValue(p,vars))).join("");
-   val=val.replace(/<br\s*\/?>/gi,"\n");out+=val;
+ const original=s;s=stripComments(stripPhp(s)).trim();
+ const unsupported=detectUnsupported(original);
+ if(unsupported){
+   return `__SIM_WARNING__Kode ini menggunakan fitur PHP server/database yang tidak dapat dijalankan oleh simulator browser.\n\n${unsupported==='database'?'🗄️ Terdeteksi MySQL/MariaDB (mysqli/PDO).':'🖥️ Terdeteksi fitur server PHP.'}\n\nUntuk praktik nyata:\n1. Jalankan Apache dan MySQL di XAMPP.\n2. Simpan file .php di C:\\xampp\\htdocs\\...\n3. Buka melalui http://localhost/...\n\nSimulator ini tetap dapat digunakan untuk memahami konsep PHP dasar.`;
  }
- const varEcho=/\$(\w+)/g;
+ let vars={};
+ // arrays and scalar assignments that occur before control structures
+ for(const st of splitStatements(s)){parseArrayAssignment(st,vars);parseAssignment(st,vars);}
+ s=executeFunctionsAndReturn(s,vars);
+ let out=executeBlockProgram(s,vars);
+ if(!out.trim())out="(Program berhasil diproses, tetapi tidak menghasilkan output.)";
  return out;
 }
 function runCode(i){
- const code=document.getElementById("editor"+i).value;savedCodes[i]=code;localStorage.setItem("phpHubCodes",JSON.stringify(savedCodes));
- let out;
- try{out=interp(code)}catch(e){out="Simulator belum dapat membaca kode ini.\nUntuk menjalankan PHP asli, simpan sebagai .php dan buka melalui XAMPP/Apache."}
- document.getElementById("output"+i).textContent=out;
+ const ed=document.getElementById("editor"+i),outEl=document.getElementById("output"+i),meta=document.getElementById("runmeta"+i);if(!ed||!outEl)return;
+ const code=ed.value;savedCodes[i]=code;localStorage.setItem("phpHubCodes",JSON.stringify(savedCodes));
+ try{
+   const out=interp(code);
+   if(out.startsWith("__SIM_WARNING__")){outEl.className="output warn";outEl.textContent=out.replace("__SIM_WARNING__","");if(meta)meta.textContent="⚠️ Kode memerlukan PHP server/XAMPP.";return;}
+   outEl.className="output success";outEl.textContent=out;if(meta)meta.textContent="✓ Simulator selesai menjalankan kode yang didukung.";
+ }catch(e){outEl.className="output error";outEl.textContent="❌ Simulator menemukan sintaks/fitur yang belum didukung.\n\n"+e.message+"\n\nUntuk PHP asli, jalankan file .php melalui XAMPP/Apache.";if(meta)meta.textContent="Periksa kembali sintaks kode.";}
 }
 function toggleDone(i){if(done.includes(i))done=done.filter(x=>x!==i);else done.push(i);localStorage.setItem("phpHubDone",JSON.stringify(done));nav();lesson(i)}
 function roadmap(){
