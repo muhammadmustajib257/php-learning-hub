@@ -127,7 +127,7 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 <div class="pbox"><div class="ptop"><span>Progress belajar</span><b id="pct">0%</b></div><div class="bar"><span id="bar"></span></div></div>
 <div class="nav">
 <div class="ntitle">Navigasi</div>
-<button onclick="home()">🏠 Beranda</button><button onclick="roadmap()">🗺️ Roadmap</button>
+<button id="homeNavBtn" onclick="goHome()">🏠 Beranda</button><button onclick="roadmap()">🗺️ Roadmap</button>
 <div class="ntitle">Materi Lengkap</div><div id="nav"></div>
 <div class="ntitle">Evaluasi & Proyek</div>
 <button onclick="quiz()">📝 Kuis Mandiri</button><button onclick="moduleView()">📘 Modul Pembelajaran</button><button onclick="project()">🚀 Proyek Akhir CRUD</button>
@@ -1500,11 +1500,17 @@ function explainCode(s){
 function block(s){return `<pre><button class="copy" onclick="copyCode(this)">Salin</button><code>${esc(s)}</code></pre>`}
 function copyCode(b){navigator.clipboard?.writeText(b.parentElement.querySelector("code").innerText);b.textContent="Tersalin";setTimeout(()=>b.textContent="Salin",1000)}
 function progress(){let p=Math.round(done.length/lessons.length*100);document.getElementById("pct").textContent=p+"%";document.getElementById("bar").style.width=p+"%"}
-function nav(){document.getElementById("nav").innerHTML=lessons.map((x,i)=>`<button onclick="lesson(${i})"><span class="n">${i+1}</span>${x.title}${done.includes(i)?" ✓":""}</button>`).join("");progress()}
-function home(){
+function nav(){
+  document.getElementById("nav").innerHTML=lessons.map((x,i)=>`<button onclick="lesson(${i})"><span class="n">${i+1}</span>${x.title}${done.includes(i)?" ✓":""}</button>`).join("");
+  progress();
+}
+function goHome(){
  document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas X RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
  <div class="callout green"><b>📘 Modul lengkap:</b> Setiap materi memiliki tujuan pembelajaran, peta submateri, penjelasan konsep, analogi sehari-hari, contoh program, penjelasan setiap baris, kesalahan umum, latihan terarah, tantangan, refleksi, praktik simulator, dan panduan XAMPP.</div><div class="grid"><div class="mini"><h4>📚 Modul lengkap</h4><p>${lessons.length} bab dengan tujuan, submateri, contoh, pembahasan baris, latihan, tantangan, refleksi, dan praktik.</p></div><div class="mini"><h4>💻 Kolom mencoba</h4><p>Setiap materi mempunyai editor untuk mencoba contoh PHP dasar secara simulasi.</p></div><div class="mini"><h4>📝 Evaluasi</h4><p>Kuis mandiri dan proyek akhir Data Siswa RPL.</p></div></div>
  <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> platform memiliki dua mode. <b>Simulator PHP Dasar</b> berjalan langsung di browser, sedangkan <b>PHP + MySQL/fitur server</b> diarahkan ke Laboratorium XAMPP agar siswa menjalankan PHP asli tanpa simulasi palsu.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button> <button class="btn" onclick="moduleView()">📘 Buka Modul Cetak</button></div>`;
+  // Selalu kembali ke posisi paling atas saat Beranda dipilih.
+  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("sidebar")?.classList.remove("open");
 }
 function lesson(i){
  const x=lessons[i], saved=savedCodes[i]||x.examples[0][1];
@@ -1906,8 +1912,8 @@ function project(){
  <div class="card"><h3>Rubrik belajar mandiri</h3><table class="table"><tr><th>Kompetensi</th><th>Target</th></tr><tr><td>PHP dasar</td><td>Variabel, operator, kondisi, loop, array, function</td></tr><tr><td>Form</td><td>Input dan validasi berjalan</td></tr><tr><td>Database</td><td>Koneksi dan tabel berhasil</td></tr><tr><td>CRUD</td><td>Create, Read, Update, Delete berjalan</td></tr><tr><td>Keamanan dasar</td><td>Prepared statement dan escaping digunakan</td></tr><tr><td>UI</td><td>Tampilan rapi dan mudah digunakan</td></tr></table></div>`;
 }
 function filterNav(q){q=q.toLowerCase().trim();let a=lessons.map((x,i)=>({x,i})).filter(z=>(z.x.title+" "+z.x.goal+" "+z.x.keywords.join(" ")).toLowerCase().includes(q));document.getElementById("nav").innerHTML=a.map(z=>`<button onclick="lesson(${z.i})"><span class="n">${z.i+1}</span>${z.x.title}</button>`).join("")||`<div style="padding:10px;color:#94a3b8;font-size:12px">Materi tidak ditemukan.</div>`}
-function resetAll(){if(confirm("Reset progress dan kode tersimpan?")){done=[];savedCodes={};localStorage.removeItem("phpHubDone");localStorage.removeItem("phpHubCodes");localStorage.removeItem("phpHubLastQuiz");nav();home()}}
+function resetAll(){if(confirm("Reset progress dan kode tersimpan?")){done=[];savedCodes={};localStorage.removeItem("phpHubDone");localStorage.removeItem("phpHubCodes");localStorage.removeItem("phpHubLastQuiz");nav();goHome()}}
 function toggleSide(){document.getElementById("sidebar").classList.toggle("open")}
-nav();home();</script>
+nav();goHome();</script>
 </body>
 </html>
