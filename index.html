@@ -20,6 +20,27 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:9px 10px;border-radius:9px;margin:2px 0}.nav button:hover,.nav button.active{background:#1e293b;color:#fff}
 .n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#334155;font-size:11px;margin-right:7px}
 .main{margin-left:300px;width:calc(100% - 300px)}
+/* Navigasi profesional: dapat diperkecil/diperbesar */
+.sidebar{transition:width .25s ease,transform .25s ease}
+.main{transition:margin-left .25s ease,width .25s ease}
+.app.nav-collapsed .sidebar{width:76px !important;padding-left:8px;padding-right:8px}
+.app.nav-collapsed .main{margin-left:76px !important;width:calc(100% - 76px) !important}
+.app.nav-collapsed .brand{justify-content:center;padding:7px 2px 18px}
+.app.nav-collapsed .brand > div:last-child{display:none !important}
+.app.nav-collapsed .pbox{display:none !important}
+.app.nav-collapsed .ntitle{display:none !important}
+.app.nav-collapsed .nav button{font-size:0 !important;text-align:center;padding:10px 5px;min-height:44px}
+.app.nav-collapsed .nav button::before{content:attr(data-icon);display:block;font-size:19px;line-height:1}
+.app.nav-collapsed .nav button .n{font-size:10px;margin:4px 0 0;width:22px;height:22px}
+.app.nav-collapsed .nav button .nav-label{display:none !important}
+.nav-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:42px}
+@media(max-width:950px){
+  .app.nav-collapsed .sidebar{width:300px !important;padding:18px 13px}
+  .app.nav-collapsed .main{margin-left:0 !important;width:100% !important}
+  .app.nav-collapsed .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+}
+
 .top{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 25px;position:sticky;top:0;z-index:10}
 .search{position:relative;flex:1;max-width:560px}.search input{width:100%;padding:11px 13px 11px 37px;border:1px solid var(--line);border-radius:10px;outline:none}.search span{position:absolute;left:13px;top:9px;color:#94a3b8;font-size:19px}
 .btn{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:9px;padding:9px 13px}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.green{background:var(--green);border-color:var(--green);color:#fff}.btn.danger{color:#b91c1c}
@@ -121,20 +142,20 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app" id="appRoot">
 <aside class="sidebar" id="sidebar">
 <div class="brand"><div class="logo">&lt;?&gt;</div><div><h1>PHP Learning Hub</h1><small>Belajar Mandiri Kelas XI RPL</small></div></div>
 <div class="pbox"><div class="ptop"><span>Progress belajar</span><b id="pct">0%</b></div><div class="bar"><span id="bar"></span></div></div>
 <div class="nav">
 <div class="ntitle">Navigasi</div>
-<button id="homeNavBtn" onclick="goHome()">🏠 Beranda</button><button onclick="roadmap()">🗺️ Roadmap</button>
+<button id="homeNavBtn" data-icon="🏠" title="Kembali ke layar utama dan kecilkan navigasi" onclick="goHome(true)">🏠 <span class="nav-label">Beranda</span></button><button data-icon="🗺️" onclick="roadmap()">🗺️ <span class="nav-label">Roadmap</span></button>
 <div class="ntitle">Materi Lengkap</div><div id="nav"></div>
 <div class="ntitle">Evaluasi & Proyek</div>
-<button onclick="quiz()">📝 Kuis Mandiri</button><button onclick="moduleView()">📘 Modul Pembelajaran</button><button onclick="project()">🚀 Proyek Akhir CRUD</button>
+<button data-icon="📝" onclick="quiz()">📝 <span class="nav-label">Kuis Mandiri</span></button><button data-icon="📘" onclick="moduleView()">📘 <span class="nav-label">Modul Pembelajaran</span></button><button data-icon="🚀" onclick="project()">🚀 <span class="nav-label">Proyek Akhir CRUD</span></button>
 </div>
 </aside>
 <main class="main">
-<header class="top"><button class="btn mobile" onclick="toggleSide()">☰</button><div class="search"><span>⌕</span><input placeholder="Cari materi..." oninput="filterNav(this.value)"></div><button class="btn danger" onclick="resetAll()">Reset Progress</button></header>
+<header class="top"><button class="btn nav-toggle" id="navToggleBtn" title="Buka/tutup navigasi" aria-label="Buka/tutup navigasi" onclick="toggleNavigation()">☰</button><div class="search"><span>⌕</span><input placeholder="Cari materi..." oninput="filterNav(this.value)"></div><button class="btn danger" onclick="resetAll()">Reset Progress</button></header>
 <section class="content" id="content"></section>
 </main>
 </div>
@@ -1501,11 +1522,23 @@ function block(s){return `<pre><button class="copy" onclick="copyCode(this)">Sal
 function copyCode(b){navigator.clipboard?.writeText(b.parentElement.querySelector("code").innerText);b.textContent="Tersalin";setTimeout(()=>b.textContent="Salin",1000)}
 function progress(){let p=Math.round(done.length/lessons.length*100);document.getElementById("pct").textContent=p+"%";document.getElementById("bar").style.width=p+"%"}
 function nav(){
-  document.getElementById("nav").innerHTML=lessons.map((x,i)=>`<button onclick="lesson(${i})"><span class="n">${i+1}</span>${x.title}${done.includes(i)?" ✓":""}</button>`).join("");
+  document.getElementById("nav").innerHTML=lessons.map((x,i)=>`<button data-icon="📄" title="${x.title}" onclick="lesson(${i})"><span class="n">${i+1}</span><span class="nav-label">${x.title}${done.includes(i)?" ✓":""}</span></button>`).join("");
   progress();
 }
-function goHome(){
- document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas X RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
+function goHome(collapse=true){
+  // Beranda selalu kembali ke dashboard. Pada desktop, sidebar diperkecil menjadi rail ikon.
+  const app=document.getElementById("appRoot");
+  const sidebar=document.getElementById("sidebar");
+  if(app && collapse && window.innerWidth > 950){
+    app.classList.add("nav-collapsed");
+    // Fallback inline agar tetap bekerja walau browser/cache memiliki CSS lama.
+    sidebar.style.width="76px";
+    const main=document.querySelector(".main");
+    if(main){ main.style.marginLeft="76px"; main.style.width="calc(100% - 76px)"; }
+  }
+  if(sidebar) sidebar.classList.remove("open");
+  updateNavToggle();
+  document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas X RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
  <div class="callout green"><b>📘 Modul lengkap:</b> Setiap materi memiliki tujuan pembelajaran, peta submateri, penjelasan konsep, analogi sehari-hari, contoh program, penjelasan setiap baris, kesalahan umum, latihan terarah, tantangan, refleksi, praktik simulator, dan panduan XAMPP.</div><div class="grid"><div class="mini"><h4>📚 Modul lengkap</h4><p>${lessons.length} bab dengan tujuan, submateri, contoh, pembahasan baris, latihan, tantangan, refleksi, dan praktik.</p></div><div class="mini"><h4>💻 Kolom mencoba</h4><p>Setiap materi mempunyai editor untuk mencoba contoh PHP dasar secara simulasi.</p></div><div class="mini"><h4>📝 Evaluasi</h4><p>Kuis mandiri dan proyek akhir Data Siswa RPL.</p></div></div>
  <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> platform memiliki dua mode. <b>Simulator PHP Dasar</b> berjalan langsung di browser, sedangkan <b>PHP + MySQL/fitur server</b> diarahkan ke Laboratorium XAMPP agar siswa menjalankan PHP asli tanpa simulasi palsu.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button> <button class="btn" onclick="moduleView()">📘 Buka Modul Cetak</button></div>`;
   // Selalu kembali ke posisi paling atas saat Beranda dipilih.
@@ -1889,7 +1922,7 @@ function quizExplanation(i){
  return quizData[i]?.[3] || "Periksa kembali materi terkait soal ini.";
 }
 function moduleView(){
- document.getElementById("content").innerHTML=`<div class="module-cover"><h2>📘 Modul Pembelajaran PHP Kelas X RPL</h2><p>Modul mandiri lengkap dari pengenalan PHP, XAMPP, sintaks, variabel, operator, percabangan, perulangan, array, function, form, struktur project, database, CRUD, keamanan, hingga proyek akhir.</p><p><b>Nama siswa:</b> ____________________________ &nbsp; <b>Kelas:</b> __________ &nbsp; <b>Tanggal:</b> __________</p><div class="callout blue"><b>Petunjuk:</b> baca materi berurutan, pahami contoh, jelaskan setiap baris, kerjakan latihan, praktikkan dengan simulator/XAMPP, lalu selesaikan kuis dan proyek.</div><button class="btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button></div>
+ document.getElementById("content").innerHTML=`<div class="module-cover"><h2>📘 Modul Pembelajaran PHP Kelas XI RPL</h2><p>Modul mandiri lengkap dari pengenalan PHP, XAMPP, sintaks, variabel, operator, percabangan, perulangan, array, function, form, struktur project, database, CRUD, keamanan, hingga proyek akhir.</p><p><b>Nama siswa:</b> ____________________________ &nbsp; <b>Kelas:</b> __________ &nbsp; <b>Tanggal:</b> __________</p><div class="callout blue"><b>Petunjuk:</b> baca materi berurutan, pahami contoh, jelaskan setiap baris, kerjakan latihan, praktikkan dengan simulator/XAMPP, lalu selesaikan kuis dan proyek.</div><button class="btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button></div>
  <div class="card"><h3>🎯 Tujuan umum modul</h3><ul><li>Memahami konsep dasar PHP dan cara kerja web server.</li><li>Mampu membuat program PHP dasar dengan sintaks yang benar.</li><li>Mampu mengolah variabel, kondisi, perulangan, array, function, dan form.</li><li>Mampu menghubungkan PHP dengan MySQL/MariaDB menggunakan XAMPP.</li><li>Mampu membuat CRUD sederhana dengan validasi dan keamanan dasar.</li><li>Mampu menjelaskan kode program yang dibuat, bukan sekadar menyalin.</li></ul></div>
  <div class="card"><h3>🧭 Alur belajar</h3><div class="tags">${lessons.map((x,i)=>`<span class="tag">${i+1}. ${x.title}</span>`).join("")}</div></div>
  ${lessons.map((x,i)=>`<section class="module-section"><div class="muted">BAB ${i+1} • ${x.level}</div><h2>${i+1}. ${esc(x.title)}</h2><p><b>Tujuan pembelajaran:</b> ${esc(x.goal)}</p><h3>📖 Pengertian</h3><p>${x.explain}</p><div class="callout"><b>💡 Perumpamaan:</b> ${x.analogy}</div><h3>🧭 Submateri</h3><ul>${x.subtopics.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><h3>🎯 Kompetensi yang harus dipahami</h3><ul>${x.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul><h3>💻 Contoh dan pembahasan baris demi baris</h3>${x.examples.map(e=>`<h4>${esc(e[0])}</h4>${block(e[1])}<details class="explain-details"><summary>📌 Buka penjelasan setiap baris</summary>${explainCode(e[1])}</details>`).join("")}<h3>⚠️ Kesalahan umum</h3><ul>${x.errors.map(e=>`<li>${esc(e)}</li>`).join("")}</ul><h3>📝 Latihan</h3><p>${esc(x.task)}</p><h3>🚀 Tantangan</h3><p>${esc(x.challenge)}</p><h3>🪞 Refleksi</h3><p>${esc(x.reflection)}</p><h3>🖥️ Praktik</h3><p>${esc(x.practice)}</p><div class="callout orange"><b>XAMPP:</b> ${esc(x.xampp)}</div><hr><p><b>Checklist BAB:</b> ☐ Saya memahami konsep ☐ Saya memahami contoh ☐ Saya dapat menjelaskan kode ☐ Saya mengerjakan latihan ☐ Saya melakukan praktik</p></section>`).join("")}
@@ -1912,8 +1945,50 @@ function project(){
  <div class="card"><h3>Rubrik belajar mandiri</h3><table class="table"><tr><th>Kompetensi</th><th>Target</th></tr><tr><td>PHP dasar</td><td>Variabel, operator, kondisi, loop, array, function</td></tr><tr><td>Form</td><td>Input dan validasi berjalan</td></tr><tr><td>Database</td><td>Koneksi dan tabel berhasil</td></tr><tr><td>CRUD</td><td>Create, Read, Update, Delete berjalan</td></tr><tr><td>Keamanan dasar</td><td>Prepared statement dan escaping digunakan</td></tr><tr><td>UI</td><td>Tampilan rapi dan mudah digunakan</td></tr></table></div>`;
 }
 function filterNav(q){q=q.toLowerCase().trim();let a=lessons.map((x,i)=>({x,i})).filter(z=>(z.x.title+" "+z.x.goal+" "+z.x.keywords.join(" ")).toLowerCase().includes(q));document.getElementById("nav").innerHTML=a.map(z=>`<button onclick="lesson(${z.i})"><span class="n">${z.i+1}</span>${z.x.title}</button>`).join("")||`<div style="padding:10px;color:#94a3b8;font-size:12px">Materi tidak ditemukan.</div>`}
-function resetAll(){if(confirm("Reset progress dan kode tersimpan?")){done=[];savedCodes={};localStorage.removeItem("phpHubDone");localStorage.removeItem("phpHubCodes");localStorage.removeItem("phpHubLastQuiz");nav();goHome()}}
-function toggleSide(){document.getElementById("sidebar").classList.toggle("open")}
-nav();goHome();</script>
+function resetAll(){if(confirm("Reset progress dan kode tersimpan?")){done=[];savedCodes={};localStorage.removeItem("phpHubDone");localStorage.removeItem("phpHubCodes");localStorage.removeItem("phpHubLastQuiz");nav();goHome(true)}}
+function toggleNavigation(){
+  const app=document.getElementById("appRoot");
+  const sidebar=document.getElementById("sidebar");
+  const main=document.querySelector(".main");
+  if(window.innerWidth<=950){
+    sidebar.classList.toggle("open");
+  }else{
+    const willCollapse=!app.classList.contains("nav-collapsed");
+    app.classList.toggle("nav-collapsed",willCollapse);
+    if(willCollapse){
+      sidebar.style.width="76px";
+      if(main){main.style.marginLeft="76px";main.style.width="calc(100% - 76px)";}
+    }else{
+      sidebar.style.width="";
+      if(main){main.style.marginLeft="";main.style.width="";}
+    }
+  }
+  updateNavToggle();
+}
+function updateNavToggle(){
+  const app=document.getElementById("appRoot");
+  const sidebar=document.getElementById("sidebar");
+  const btn=document.getElementById("navToggleBtn");
+  if(!btn) return;
+  const collapsed=app.classList.contains("nav-collapsed");
+  const mobileOpen=sidebar.classList.contains("open");
+  btn.textContent=(window.innerWidth<=950 ? (mobileOpen?"✕":"☰") : (collapsed?"☰":"☰"));
+  btn.title=window.innerWidth<=950 ? (mobileOpen?"Tutup navigasi":"Buka navigasi") : (collapsed?"Perbesar navigasi":"Perkecil navigasi");
+  btn.setAttribute("aria-label",btn.title);
+}
+window.addEventListener("resize",()=>{
+  const app=document.getElementById("appRoot");
+  const sidebar=document.getElementById("sidebar");
+  const main=document.querySelector(".main");
+  if(window.innerWidth<=950){
+    sidebar.style.width="";
+    if(main){main.style.marginLeft="";main.style.width="";}
+  }else if(app.classList.contains("nav-collapsed")){
+    sidebar.style.width="76px";
+    if(main){main.style.marginLeft="76px";main.style.width="calc(100% - 76px)";}
+  }
+  updateNavToggle();
+});
+nav();goHome(false);</script>
 </body>
 </html>
