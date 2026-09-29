@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHP Learning Hub v2 - Belajar PHP Mandiri</title>
+<title>PHP Learning Hub — Kelas X RPL | PHP Dasar sampai CRUD</title>
 <style>
 :root{--blue:#2563eb;--blue2:#1d4ed8;--navy:#0f172a;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#64748b;--line:#e2e8f0;--green:#16a34a;--orange:#d97706;--red:#dc2626}
 *{box-sizing:border-box}
@@ -64,6 +64,12 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 .sim-input-field input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .sim-input-note{margin-top:10px;font-size:12px;color:#64748b;line-height:1.5}
 .output{white-space:pre-wrap;min-height:110px}
+
+/* Professional learning lab UI */
+.lab-shell{margin-top:16px;border:1px solid #dbe3ef;border-radius:16px;overflow:hidden;background:#fff}
+.lab-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff}
+.lab-head h4{margin:0;font-size:15px}.lab-head small{color:#cbd5e1}.lab-body{padding:15px}.lab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.lab-step{border:1px solid var(--line);border-radius:11px;padding:11px;background:#f8fafc}.lab-step b{display:block;margin-bottom:5px}.lab-step span{font-size:12px;color:#64748b;line-height:1.5}.server-output{border:1px solid #fdba74;background:#fff7ed;border-radius:12px;padding:15px;line-height:1.6}.server-output .server-title{font-weight:800;color:#9a3412;margin-bottom:7px}.server-output ol{margin:8px 0;padding-left:21px}.server-output code{background:#ffedd5;padding:2px 5px;border-radius:5px}.sim-input-panel.active{box-shadow:0 2px 10px rgba(37,99,235,.05)}
+@media(max-width:800px){.lab-grid{grid-template-columns:1fr}.lab-head{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -554,9 +560,9 @@ function copyCode(b){navigator.clipboard?.writeText(b.parentElement.querySelecto
 function progress(){let p=Math.round(done.length/lessons.length*100);document.getElementById("pct").textContent=p+"%";document.getElementById("bar").style.width=p+"%"}
 function nav(){document.getElementById("nav").innerHTML=lessons.map((x,i)=>`<button onclick="lesson(${i})"><span class="n">${i+1}</span>${x.title}${done.includes(i)?" ✓":""}</button>`).join("");progress()}
 function home(){
- document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Materi lengkap, contoh kode, tugas mandiri, dan kolom praktik kode untuk siswa kelas X RPL. Pelajari satu materi, coba contoh, lalu kerjakan tantangannya.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
+ document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas X RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
  <div class="callout green"><b>🆕 Fitur penjelasan baris demi baris:</b> Setiap contoh program sekarang memiliki bagian "Penjelasan setiap baris". Siswa dapat melihat nomor baris, kode, dan arti/fungsi baris tersebut satu per satu.</div><div class="grid"><div class="mini"><h4>📚 Materi lengkap</h4><p>${lessons.length} materi berurutan dari PHP dasar sampai proyek CRUD.</p></div><div class="mini"><h4>💻 Kolom mencoba</h4><p>Setiap materi mempunyai editor untuk mencoba contoh PHP dasar secara simulasi.</p></div><div class="mini"><h4>📝 Evaluasi</h4><p>Kuis mandiri dan proyek akhir Data Siswa RPL.</p></div></div>
- <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> kolom praktik di platform ini adalah simulator untuk latihan konsep PHP dasar. Untuk PHP sebenarnya dan koneksi MySQL, jalankan kode melalui XAMPP/Apache.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button></div>`;
+ <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> platform memiliki dua mode. <b>Simulator PHP Dasar</b> berjalan langsung di browser, sedangkan <b>PHP + MySQL/fitur server</b> diarahkan ke Laboratorium XAMPP agar siswa menjalankan PHP asli tanpa simulasi palsu.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button></div>`;
 }
 function lesson(i){
  const x=lessons[i], saved=savedCodes[i]||x.examples[0][1];
@@ -578,9 +584,9 @@ function lesson(i){
 }
 function playground(i,codeText){
  return `<div class="playground">
- <div class="play-head"><h3>🧪 Coba Program Sendiri</h3><div><button class="btn" onclick="loadExample(${i})">Muat Contoh</button> <button class="btn" onclick="saveCode(${i})">Simpan</button> <button class="btn green" onclick="runCode(${i})">▶ Jalankan</button></div></div>
- <div class="simulator-status"><span class="sim-badge">🟢 Simulator PHP Dasar</span><span class="sim-badge info">🌐 Berjalan di browser</span></div>
- <div class="sim-help"><b>Yang bisa dicoba:</b> <code>echo</code>, variabel, string, operasi hitung, <code>if / elseif / else</code>, <code>for</code>, <code>while</code>, <code>foreach</code>, array sederhana, fungsi sederhana, dan <code>$_POST</code>/<code>$_GET</code> sederhana.<br><b>Catatan:</b> panel input di bawah adalah simulasi input form. Kode <code>mysqli</code>, MySQL/MariaDB, <code>PDO</code>, file <code>include/require</code>, session, upload, dan fitur server PHP tetap harus dijalankan melalui XAMPP.</div>
+ <div class="play-head"><h3>🧪 Laboratorium Kode</h3><div><button class="btn" onclick="loadExample(${i})">Muat Contoh</button> <button class="btn" onclick="saveCode(${i})">Simpan</button> <button class="btn green" onclick="runCode(${i})">▶ Jalankan</button></div></div>
+ <div class="simulator-status"><span class="sim-badge">🟢 Mode 1 • Simulator PHP Dasar</span><span class="sim-badge info">🌐 Berjalan di browser</span><span class="sim-badge warn">🖥️ Mode 2 • PHP + MySQL → XAMPP</span></div>
+ <div class="sim-help"><b>🧪 Mode 1 — latihan langsung:</b> <code>echo</code>, <code>print</code>, variabel, string, operasi hitung, kondisi, perulangan, array, function sederhana, <code>$_POST</code>/<code>$_GET</code>, <code>trim()</code>, <code>empty()</code>, dan input form simulasi.<br><b>🖥️ Mode 2 — praktik nyata:</b> <code>mysqli</code>, MySQL/MariaDB, PDO, <code>include/require</code>, session, upload file, dan fitur server tidak dipaksakan berjalan di browser. Saat terdeteksi, platform akan menampilkan <b>Laboratorium XAMPP</b> dan langkah praktik yang jelas.</div>
  <textarea id="editor${i}" class="editor" spellcheck="false" oninput="refreshSimInputs(${i})">${esc(codeText)}</textarea>
  <div id="siminputs${i}" class="sim-input-panel"></div>
  <div class="out-title">Output</div><div id="output${i}" class="output">Klik "Jalankan" untuk menjalankan program.</div><div id="runmeta${i}" class="run-meta"></div></div>`;
@@ -596,7 +602,7 @@ function refreshSimInputs(i){
  if(!fields.length){panel.className="sim-input-panel";panel.innerHTML="";return;}
  const previous={}; panel.querySelectorAll("input[data-field]").forEach(x=>previous[x.dataset.field]=x.value);
  panel.className="sim-input-panel active";
- panel.innerHTML=`<div class="sim-input-head"><strong>⌨️ Input pengguna</strong><span>Simulator form PHP</span></div><div class="sim-input-grid">${fields.map(f=>`<div class="sim-input-field"><label for="sim_${i}_${escAttr(f)}">${esc(f)}</label><input id="sim_${i}_${escAttr(f)}" data-field="${escAttr(f)}" type="text" value="${escAttr(previous[f]??"")}" placeholder="Masukkan ${escAttr(f)}..."></div>`).join("")}</div><div class="sim-input-note">💡 Nilai ini dipakai saat kode membaca <code>$_POST["nama"]</code> atau <code>$_GET["nama"]</code>. Ini simulasi di browser, bukan request HTTP PHP sungguhan.</div>`;
+ panel.innerHTML=`<div class="sim-input-head"><strong>⌨️ Input Pengguna</strong><span>Simulasi $_POST / $_GET</span></div><div class="sim-input-grid">${fields.map(f=>`<div class="sim-input-field"><label for="sim_${i}_${escAttr(f)}">${esc(f)}</label><input id="sim_${i}_${escAttr(f)}" data-field="${escAttr(f)}" type="text" value="${escAttr(previous[f]??"")}" placeholder="Masukkan ${escAttr(f)}..."></div>`).join("")}</div><div class="sim-input-note">💡 Nilai ini dipakai saat kode membaca <code>$_POST["nama"]</code> atau <code>$_GET["nama"]</code>. Ini simulasi di browser, bukan request HTTP PHP sungguhan.</div>`;
 }
 function readSimInputs(i){
  const panel=document.getElementById("siminputs"+i),data={}; if(!panel)return data;
@@ -647,12 +653,26 @@ function findTopOperator(expr,ops){
 }
 function phpValue(v,vars){
  v=String(v).trim();
+ const serverReq=v.match(/^\$_SERVER\s*\[\s*["']([^"']+)["']\s*\]$/i);
+ if(serverReq){
+   const key=serverReq[1].toUpperCase();
+   if(key==='REQUEST_METHOD') return vars.__requestMethod || 'POST';
+   return '';
+ }
  const req=v.match(/^\$_(POST|GET)\s*\[\s*["']([^"']+)["']\s*\]\s*(?:\?\?\s*(.*))?$/s);
  if(req){const bag=vars.__input||{},key=req[2];return Object.prototype.hasOwnProperty.call(bag,key)?bag[key]:(req[3]!==undefined?phpValue(req[3],vars):"");}
  const trimCall=v.match(/^trim\s*\((.*)\)$/is);
  if(trimCall)return String(phpValue(trimCall[1],vars)).trim();
  const emptyCall=v.match(/^empty\s*\((.*)\)$/is);
  if(emptyCall){const val=phpValue(emptyCall[1],vars);return val===""||val===0||val===false||val===null||val===undefined||val==="0";}
+ const issetCall=v.match(/^isset\s*\((.*)\)$/is);
+ if(issetCall){const inner=issetCall[1].trim();if(/^\$_(?:POST|GET)\s*\[/.test(inner)){return phpValue(inner,vars)!==undefined && phpValue(inner,vars)!==null;}return phpValue(inner,vars)!==undefined && phpValue(inner,vars)!==null;}
+ const htmlCall=v.match(/^htmlspecialchars\s*\((.*)\)$/is);
+ if(htmlCall){return String(phpValue(htmlCall[1],vars)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+ const upperCall=v.match(/^strtoupper\s*\((.*)\)$/is);
+ if(upperCall)return String(phpValue(upperCall[1],vars)).toUpperCase();
+ const lowerCall=v.match(/^strtolower\s*\((.*)\)$/is);
+ if(lowerCall)return String(phpValue(lowerCall[1],vars)).toLowerCase();
  while(v.startsWith('(')&&v.endsWith(')')){let d=0,ok=true,q=null;for(let i=0;i<v.length;i++){let c=v[i];if(q){if(c===q&&v[i-1]!=="\\")q=null;continue;}if(c==='"'||c==="'"){q=c;continue;}if(c==='(')d++;if(c===')')d--;if(d===0&&i<v.length-1){ok=false;break;}}if(ok)v=v.slice(1,-1).trim();else break;}
  if(/^"[\s\S]*"$/.test(v)||/^'[\s\S]*'$/.test(v)){
    let str=v.slice(1,-1);
@@ -802,7 +822,7 @@ function interp(s,input={}){
  if(unsupported){
    return `__SIM_WARNING__Kode ini menggunakan fitur PHP server/database yang tidak dapat dijalankan oleh simulator browser.\n\n${unsupported==='database'?'🗄️ Terdeteksi MySQL/MariaDB (mysqli/PDO).':'🖥️ Terdeteksi fitur server PHP.'}\n\nUntuk praktik nyata:\n1. Jalankan Apache dan MySQL di XAMPP.\n2. Simpan file .php di C:\\xampp\\htdocs\\...\n3. Buka melalui http://localhost/...\n\nSimulator ini tetap dapat digunakan untuk memahami konsep PHP dasar.`;
  }
- let vars={__input:input};
+ let vars={__input:input,__requestMethod:'POST'};
  // arrays and scalar assignments that occur before control structures
  for(const st of splitStatements(s)){parseArrayAssignment(st,vars);parseAssignment(st,vars);}
  s=executeFunctionsAndReturn(s,vars);
@@ -815,16 +835,39 @@ function runCode(i){
  const code=ed.value;savedCodes[i]=code;localStorage.setItem("phpHubCodes",JSON.stringify(savedCodes));
  refreshSimInputs(i);
  const input=readSimInputs(i);
- outEl.className="output";outEl.textContent="⏳ Menjalankan simulasi...";if(meta)meta.textContent="Memproses kode PHP di browser...";
+ outEl.className="output";outEl.textContent="⏳ Menjalankan simulasi...";if(meta)meta.textContent="Menganalisis kode PHP di browser...";
  setTimeout(()=>{
   try{
+   const unsupported=detectUnsupported(code);
+   if(unsupported){
+     outEl.className="output warn";
+     outEl.innerHTML=serverLabHtml(unsupported);
+     if(meta)meta.textContent="ℹ️ Mode praktik nyata: jalankan kode ini dengan PHP + XAMPP.";
+     return;
+   }
    const out=interp(code,input);
-   if(out.startsWith("__SIM_WARNING__")){outEl.className="output warn";outEl.textContent=out.replace("__SIM_WARNING__","");if(meta)meta.textContent="⚠️ Kode memerlukan PHP server/XAMPP.";return;}
+   if(out.startsWith("__SIM_WARNING__")){
+     outEl.className="output warn";outEl.innerHTML=serverLabHtml("server");
+     if(meta)meta.textContent="ℹ️ Kode ini memerlukan PHP server.";return;
+   }
    outEl.className="output success";
-   outEl.textContent=out.trim()?out:"✓ Program selesai dijalankan.\n\nTidak ada output yang dicetak. Jika Anda ingin menampilkan hasil, gunakan echo atau print.";
-   if(meta)meta.textContent="✓ Simulasi selesai. Input dari panel di atas sudah digunakan.";
-  }catch(e){outEl.className="output error";outEl.textContent="❌ Terjadi kesalahan pada simulator.\n\n"+e.message+"\n\nPeriksa sintaks PHP Anda atau gunakan XAMPP untuk menjalankan PHP asli.";if(meta)meta.textContent="Periksa kembali kode.";}
+   outEl.textContent=out.trim()?out:"✓ Program selesai dijalankan.\n\nTidak ada output yang dicetak. Jika ingin melihat hasil, gunakan echo atau print.";
+   if(meta)meta.textContent="✓ Simulasi selesai. Input pada panel digunakan sebagai $_POST/$_GET.";
+  }catch(e){outEl.className="output error";outEl.textContent="❌ Simulator menemukan sintaks/fitur yang belum didukung.\n\n"+e.message+"\n\nUntuk PHP asli, jalankan kode melalui XAMPP.";if(meta)meta.textContent="Periksa kembali kode atau gunakan XAMPP.";}
  },80);
+}
+function serverLabHtml(type){
+ const database=type==='database';
+ return `<div class="server-output">
+   <div class="server-title">${database?'🗄️ Praktik PHP + MySQL/MariaDB':'🖥️ Praktik PHP Server dengan XAMPP'}</div>
+   <div>Kode ini membutuhkan <b>PHP yang berjalan di server</b>${database?' dan database MySQL/MariaDB':''}. Browser/GitHub Pages tidak menjalankan fitur tersebut secara langsung.</div>
+   <div class="lab-shell"><div class="lab-head"><div><h4>Laboratorium XAMPP</h4><small>Gunakan komputer praktik untuk menjalankan PHP asli.</small></div><span>MODE SERVER</span></div><div class="lab-body"><div class="lab-grid">
+     <div class="lab-step"><b>1. Jalankan server</b><span>Buka XAMPP lalu aktifkan <b>Apache</b>${database?' dan <b>MySQL</b>':''}.</span></div>
+     <div class="lab-step"><b>2. Simpan project</b><span>Letakkan file <code>.php</code> di <code>C:\\xampp\\htdocs\\belajar_php\\</code>.</span></div>
+     <div class="lab-step"><b>3. Buka browser</b><span>Akses <code>http://localhost/belajar_php/</code>.</span></div>
+   </div>${database?'<div class="callout orange" style="margin-bottom:0"><b>Database:</b> buka phpMyAdmin, buat database/tabel sesuai materi, lalu pastikan nama database dan koneksi.php sesuai.</div>':''}</div></div>
+   <div style="margin-top:12px"><b>💡 Jangan dianggap gagal.</b> Simulator sengaja tidak memalsukan koneksi database. Gunakan mode XAMPP agar siswa belajar PHP server yang sebenarnya.</div>
+ </div>`;
 }
 function toggleDone(i){if(done.includes(i))done=done.filter(x=>x!==i);else done.push(i);localStorage.setItem("phpHubDone",JSON.stringify(done));nav();lesson(i)}
 function roadmap(){
