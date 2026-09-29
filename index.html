@@ -37,7 +37,31 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 .explain-details{margin:10px 0 20px;border:1px solid var(--line);border-radius:12px;background:#f8fafc;overflow:hidden}.explain-details summary{cursor:pointer;padding:12px 14px;font-weight:700;color:#1e3a8a;background:#eff6ff}.line-explain{padding:8px 10px}.line-row{display:grid;grid-template-columns:42px minmax(280px,1fr) minmax(240px,1fr);gap:10px;align-items:stretch;border-bottom:1px solid #e5e7eb;padding:7px 0}.line-row:last-child{border-bottom:0}.line-no{display:grid;place-items:center;color:#64748b;font-weight:700;background:#f1f5f9;border-radius:7px;min-height:38px}.line-code{margin:0;padding:9px 10px;border-radius:8px;min-height:38px;white-space:pre-wrap}.line-code code{font-size:12px}.line-desc{padding:9px 11px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;color:#475569;font-size:13px;line-height:1.55}.simnote{font-size:12px;color:#64748b;margin:7px 0}
 @media(max-width:800px){.line-row{grid-template-columns:32px 1fr}.line-desc{grid-column:2}.line-code{min-width:0}.explain-details summary{font-size:13px}}
 .lesson-nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
-.quiz-option{display:block;width:100%;text-align:left;padding:11px;border:1px solid var(--line);background:#fff;border-radius:9px;margin:7px 0}.quiz-option.correct{background:#f0fdf4;border-color:#86efac}.quiz-option.wrong{background:#fef2f2;border-color:#fca5a5}
+.quiz-option{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:13px 14px;border:1px solid var(--line);background:#fff;border-radius:11px;margin:8px 0;transition:.18s;position:relative}
+.quiz-option:hover{border-color:#93c5fd;background:#f8fbff;transform:translateY(-1px)}
+.quiz-option .choice-letter{display:grid;place-items:center;min-width:28px;height:28px;border:1px solid #cbd5e1;border-radius:8px;font-weight:800;color:#475569;background:#f8fafc}
+.quiz-option .choice-text{flex:1;line-height:1.5}
+.quiz-option.selected{border:2px solid #2563eb;background:#eff6ff;color:#1d4ed8;padding:12px 13px}
+.quiz-option.selected .choice-letter{background:#2563eb;border-color:#2563eb;color:#fff}
+.quiz-option.correct{background:#f0fdf4;border-color:#86efac;color:#166534}
+.quiz-option.correct .choice-letter{background:#16a34a;border-color:#16a34a;color:#fff}
+.quiz-option.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.quiz-option.wrong .choice-letter{background:#dc2626;border-color:#dc2626;color:#fff}
+.quiz-option:disabled{cursor:default;opacity:1}
+.quiz-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:15px;padding:18px;margin:15px 0}
+.quiz-card.answered{border-color:#bfdbfe}
+.quiz-number{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#dbeafe;color:#1d4ed8;font-weight:900;margin-right:8px}
+.quiz-feedback{margin-top:10px;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.6}
+.quiz-feedback.ok{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+.quiz-feedback.bad{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.quiz-feedback.neutral{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412}
+.quiz-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0}
+.quiz-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0}
+.quiz-stat{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;text-align:center}
+.quiz-stat b{display:block;font-size:24px;color:#1e3a8a}
+.module-cover{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#fff;border-radius:18px;padding:30px;margin-bottom:20px}
+.module-section{break-inside:avoid;border-bottom:1px solid #cbd5e1;padding:16px 0}
+@media(max-width:700px){.quiz-summary{grid-template-columns:repeat(2,1fr)}}
 .mobile{display:none}
 @media(max-width:950px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile{display:inline-block}.grid{grid-template-columns:1fr}.hero{flex-direction:column;align-items:flex-start}.top{padding:0 13px}.content{padding:20px 13px 50px}}
 
@@ -70,6 +94,30 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 .lab-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff}
 .lab-head h4{margin:0;font-size:15px}.lab-head small{color:#cbd5e1}.lab-body{padding:15px}.lab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.lab-step{border:1px solid var(--line);border-radius:11px;padding:11px;background:#f8fafc}.lab-step b{display:block;margin-bottom:5px}.lab-step span{font-size:12px;color:#64748b;line-height:1.5}.server-output{border:1px solid #fdba74;background:#fff7ed;border-radius:12px;padding:15px;line-height:1.6}.server-output .server-title{font-weight:800;color:#9a3412;margin-bottom:7px}.server-output ol{margin:8px 0;padding-left:21px}.server-output code{background:#ffedd5;padding:2px 5px;border-radius:5px}.sim-input-panel.active{box-shadow:0 2px 10px rgba(37,99,235,.05)}
 @media(max-width:800px){.lab-grid{grid-template-columns:1fr}.lab-head{align-items:flex-start;flex-direction:column}}
+@media print{
+ body{background:#fff!important;color:#111!important}
+ .sidebar,.top,.lesson-nav,.playground,.copy,.btn,.quiz-toolbar{display:none!important}
+ .main{margin-left:0!important;width:100%!important}
+ .content{max-width:none!important;padding:0!important}
+ .card,.module-cover,.module-section{box-shadow:none!important;border:0!important;border-bottom:1px solid #ccc!important;border-radius:0!important}
+ .module-cover{background:#fff!important;color:#111!important;padding:0!important}
+ pre{white-space:pre-wrap!important;color:#111!important;background:#f5f5f5!important;border:1px solid #ccc!important}
+ .module-section{break-inside:avoid}
+}
+
+.quiz-navigator{display:flex;flex-wrap:wrap;gap:7px;padding:12px;margin:12px 0 18px;background:#f8fafc;border:1px solid var(--line);border-radius:12px}
+.quiz-navigator button{width:34px;height:34px;border:1px solid #cbd5e1;background:#fff;border-radius:9px;font-weight:800;color:#475569;cursor:pointer}
+.quiz-navigator button.answered{background:#dbeafe;border-color:#60a5fa;color:#1d4ed8}
+.quiz-navigator button.nav-correct{background:#dcfce7;border-color:#4ade80;color:#166534}
+.quiz-navigator button.nav-wrong{background:#fee2e2;border-color:#f87171;color:#991b1b}
+.quiz-navigator button.unanswered{background:#ffedd5;border-color:#fb923c;color:#9a3412}
+.callout.blue{background:#eff6ff;border-left:4px solid #3b82f6;color:#1e3a8a}
+.module-section{break-inside:avoid;page-break-inside:avoid}
+@media print{
+  .module-section{page-break-inside:auto}
+  .module-section .line-explain{font-size:9px}
+  .module-section{border-bottom:1px solid #ddd;padding-bottom:20px;margin-bottom:20px}
+}
 </style>
 </head>
 <body>
@@ -82,7 +130,7 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 <button onclick="home()">🏠 Beranda</button><button onclick="roadmap()">🗺️ Roadmap</button>
 <div class="ntitle">Materi Lengkap</div><div id="nav"></div>
 <div class="ntitle">Evaluasi & Proyek</div>
-<button onclick="quiz()">📝 Kuis Mandiri</button><button onclick="project()">🚀 Proyek Akhir CRUD</button>
+<button onclick="quiz()">📝 Kuis Mandiri</button><button onclick="moduleView()">📘 Modul Pembelajaran</button><button onclick="project()">🚀 Proyek Akhir CRUD</button>
 </div>
 </aside>
 <main class="main">
@@ -93,387 +141,1281 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 
 <script>
 const lessons=[
-{
-title:"Pengenalan PHP",level:"Dasar",goal:"Memahami pengertian PHP, cara kerja PHP, dan kapan PHP digunakan.",keywords:["php","server","website"],
-explain:`PHP adalah bahasa pemrograman yang digunakan untuk membuat website dinamis. Berbeda dari HTML yang terutama menyusun struktur halaman dan CSS yang mengatur tampilan, PHP dapat menerima input, mengolah data, mengambil data dari database, lalu menghasilkan halaman yang dikirim ke browser.`,
-analogy:`Bayangkan sebuah restoran. HTML adalah bentuk meja, kursi, dan daftar menu. CSS adalah warna, dekorasi, dan tata letak restoran. PHP adalah koki yang menerima pesanan, mengolahnya, dan menyiapkan hasil. Database adalah gudang tempat bahan dan data disimpan.`,
-points:["PHP berjalan di server.","Browser menerima hasil yang sudah diproses server.","PHP dapat terhubung ke MySQL/MariaDB.","File PHP umumnya berekstensi .php.","PHP cocok untuk aplikasi seperti data siswa, login, CRUD, dan sistem informasi."],
-examples:[["PHP paling sederhana",`<?php
-echo "Halo Dunia!";
-?>`],["PHP di dalam HTML",`<!DOCTYPE html>
-<html>
-<body>
-    <h1>Data Siswa</h1>
-    <?php
-        echo "Nama: Andi";
-        echo "<br>Kelas: X RPL";
-    ?>
-</body>
-</html>`]],
-errors:["Menyimpan file sebagai .html padahal ingin menjalankan PHP.","Membuka file PHP dengan double-click tanpa server.","Lupa menulis titik koma pada statement tertentu."],
-task:"Buat index.php yang menampilkan nama, kelas, jurusan, dan kalimat motivasi menggunakan echo.",
-challenge:"Tambahkan tanggal belajar dan tampilkan dalam satu halaman."
-},
-{
-title:"XAMPP dan Menjalankan PHP",level:"Dasar",goal:"Mampu membuat project PHP lokal dan menjalankannya melalui Apache.",keywords:["xampp","apache","localhost","htdocs"],
-explain:`XAMPP adalah paket lingkungan server lokal. Untuk pembelajaran PHP, Apache berfungsi sebagai web server dan MySQL/MariaDB dapat digunakan sebagai database. Folder project PHP di Windows umumnya diletakkan di C:\\xampp\\htdocs.`,
-analogy:`XAMPP seperti bengkel latihan di komputer. Apache adalah mekanik yang menerima permintaan halaman PHP, PHP adalah bahasa yang digunakan untuk mengerjakan proses, dan browser adalah tempat kita melihat hasilnya.`,
-points:["Nyalakan Apache dari XAMPP Control Panel.","Buat folder project di htdocs.","Akses project melalui http://localhost/nama_folder/.","Untuk database, nyalakan MySQL/MariaDB.","phpMyAdmin digunakan untuk mengelola database."],
-examples:[["Struktur project",`C:\\xampp\\htdocs\\belajar_php\\
-├── index.php
-└── style.css`],["index.php",`<?php
-echo "PHP berjalan melalui XAMPP";
-?>`],["Alamat browser",`http://localhost/belajar_php/`]],
-errors:["Apache belum aktif.","Folder diletakkan di luar htdocs lalu dicoba lewat localhost.","Port Apache bentrok dengan aplikasi lain."],
-task:"Buat folder belajar_php di htdocs, buat index.php, lalu tampilkan tulisan 'PHP saya berhasil berjalan'.",
-challenge:"Buat halaman kedua bernama profil.php dan hubungkan dari index.php."
-},
-{
-title:"Sintaks Dasar PHP",level:"Dasar",goal:"Memahami tag PHP, statement, komentar, echo, dan aturan penulisan.",keywords:["syntax","echo","komentar","semicolon"],
-explain:`Sintaks adalah aturan penulisan bahasa pemrograman. PHP biasanya diawali dengan <?php. Setiap perintah yang selesai biasanya diakhiri titik koma (;). Komentar digunakan untuk memberi catatan pada kode dan tidak diproses sebagai perintah.`,
-analogy:`Sintaks seperti aturan menulis surat resmi. Jika susunannya tidak sesuai, pembaca bisa bingung. Pada pemrograman, kesalahan sintaks dapat membuat program gagal dijalankan.`,
-points:["Gunakan <?php untuk membuka kode PHP.","Statement umumnya diakhiri ;.","Komentar tidak dijalankan.","PHP bersifat case-sensitive pada nama variabel."],
-examples:[["echo",`<?php
-echo "Selamat datang di kelas X RPL";
-?>`],["Komentar",`<?php
-// Ini komentar satu baris
-# Ini juga komentar
-/*
-   Komentar beberapa baris
-*/
-echo "Program berjalan";
-?>`]],
-errors:["Menulis <? php dengan spasi.","Lupa ; setelah perintah.","Menggunakan nama variabel yang berbeda huruf besar-kecil."],
-task:"Buat program yang menampilkan 5 informasi tentang diri sendiri dan beri komentar pada setiap bagian.",
-challenge:"Buat halaman profil sederhana yang memadukan HTML dan PHP."
-},
-{
-title:"Variabel dan Tipe Data",level:"Dasar",goal:"Menyimpan data dan memahami string, integer, float, serta boolean.",keywords:["variabel","string","integer","boolean"],
-explain:`Variabel adalah tempat untuk menyimpan data sementara selama program berjalan. Dalam PHP, nama variabel diawali tanda $. Nilai dapat berupa teks, angka bulat, angka desimal, atau true/false.`,
-analogy:`Variabel seperti kotak yang diberi label. Kotak bernama $nama berisi nama, kotak $kelas berisi kelas, dan seterusnya. Saat diperlukan, kita mengambil isi kotak tersebut.`,
-points:["Variabel diawali $.","String menyimpan teks.","Integer menyimpan bilangan bulat.","Float menyimpan bilangan desimal.","Boolean menyimpan true atau false."],
-examples:[["Variabel",`<?php
-$nama = "Andi";
-$kelas = "X RPL";
-$umur = 16;
-$nilai = 87.5;
-$lulus = true;
-
-echo $nama;
-echo "<br>";
-echo $kelas;
-?>`],["Gabung teks",`<?php
-$nama = "Andi";
-echo "Halo " . $nama;
-?>`]],
-errors:["Menulis nama variabel tanpa $.","Nama variabel diawali angka.","Mengira nilai string harus selalu angka."],
-task:"Buat variabel $nis, $nama, $kelas, $jurusan, dan $nilai. Tampilkan semuanya.",
-challenge:"Tampilkan kalimat: 'Nama saya ... dari kelas ... dan nilai saya ...'."
-},
-{
-title:"Operator PHP",level:"Dasar",goal:"Menggunakan operator aritmatika, perbandingan, dan logika.",keywords:["operator","hitung","perbandingan","logika"],
-explain:`Operator adalah simbol yang digunakan untuk melakukan operasi pada data. Operator aritmatika digunakan untuk menghitung, operator perbandingan untuk membandingkan nilai, dan operator logika untuk menggabungkan kondisi.`,
-analogy:`Kalkulator memakai operator +, -, ×, dan ÷. PHP memiliki operator serupa, ditambah operator untuk memeriksa apakah suatu kondisi benar atau salah.`,
-points:["+ penjumlahan.","- pengurangan.","* perkalian.","/ pembagian.","% sisa bagi.","== membandingkan kesamaan nilai.",">= berarti lebih besar atau sama."],
-examples:[["Aritmatika",`<?php
-$a = 10;
-$b = 3;
-
-echo $a + $b;
-echo "<br>";
-echo $a * $b;
-echo "<br>";
-echo $a % $b;
-?>`],["Perbandingan",`<?php
-$nilai = 80;
-var_dump($nilai >= 75);
-?>`]],
-errors:["Tertukar = dengan ==.","Salah memahami % sebagai persen; dalam PHP % adalah modulus/sisa bagi."],
-task:"Buat program menghitung total harga 3 barang dan rata-rata nilainya.",
-challenge:"Buat program menghitung luas dan keliling persegi panjang."
-},
-{
-title:"Percabangan if, elseif, else",level:"Dasar",goal:"Membuat program yang dapat mengambil keputusan.",keywords:["if","else","elseif","kondisi"],
-explain:`Percabangan digunakan ketika program harus memilih tindakan berdasarkan kondisi. Misalnya sistem sekolah perlu menentukan apakah nilai siswa lulus atau belum.`,
-analogy:`Seperti aturan di sekolah: jika nilai minimal 75 maka lulus; jika kurang dari 75 maka belum lulus. Komputer menjalankan aturan tersebut secara konsisten.`,
-points:["if memeriksa kondisi pertama.","elseif memeriksa kondisi berikutnya.","else dijalankan jika kondisi sebelumnya tidak terpenuhi.","Kondisi biasanya menghasilkan true atau false."],
-examples:[["Lulus",`<?php
-$nilai = 85;
-
-if ($nilai >= 75) {
-    echo "Lulus";
-} else {
-    echo "Belum Lulus";
-}
-?>`],["Predikat",`<?php
-$nilai = 86;
-
-if ($nilai >= 90) {
-    echo "A";
-} elseif ($nilai >= 80) {
-    echo "B";
-} elseif ($nilai >= 70) {
-    echo "C";
-} else {
-    echo "D";
-}
-?>`]],
-errors:["Kondisi tidak memakai operator perbandingan yang benar.","Kurung kurawal tidak lengkap.","Urutan kondisi membuat hasil tidak sesuai."],
-task:"Buat penilaian A-D berdasarkan nilai siswa.",
-challenge:"Buat program yang menentukan 'Remedial' jika nilai < 75 dan 'Lulus' jika nilai >= 75."
-},
-{
-title:"Perulangan",level:"Dasar",goal:"Mengulang pekerjaan menggunakan for, while, dan foreach.",keywords:["loop","for","while","foreach"],
-explain:`Perulangan digunakan ketika pekerjaan yang sama perlu dilakukan berkali-kali. Daripada menulis echo sepuluh kali, kita dapat membuat satu perulangan.`,
-analogy:`Guru ingin menuliskan nama 30 siswa. Daripada membuat perintah satu per satu, komputer dapat mengulang perintah berdasarkan jumlah data.`,
-points:["for cocok jika jumlah pengulangan diketahui.","while cocok jika pengulangan bergantung pada kondisi.","foreach cocok untuk menelusuri array."],
-examples:[["for",`<?php
-for ($i = 1; $i <= 5; $i++) {
-    echo "Data ke-$i<br>";
-}
-?>`],["foreach",`<?php
-$siswa = ["Andi", "Budi", "Citra"];
-
-foreach ($siswa as $nama) {
-    echo $nama . "<br>";
-}
-?>`]],
-errors:["Lupa menaikkan nilai counter sehingga loop tidak berhenti.","Salah menulis batas kondisi.","Mengakses index array yang tidak ada."],
-task:"Tampilkan angka 1-20 menggunakan for dan daftar 5 nama menggunakan foreach.",
-challenge:"Tampilkan tabel perkalian 1 sampai 10."
-},
-{
-title:"Array",level:"Menengah",goal:"Menyimpan banyak data dalam satu variabel.",keywords:["array","index","associative","foreach"],
-explain:`Array digunakan untuk menyimpan sekumpulan nilai. Array indexed menggunakan angka index, sedangkan associative array menggunakan key seperti nama, kelas, dan jurusan.`,
-analogy:`Array seperti laci dengan banyak slot. Setiap slot memiliki posisi. Associative array seperti lemari dengan label: slot 'nama', 'kelas', dan 'jurusan'.`,
-points:["Index array dimulai dari 0.","Associative array memiliki key dan value.","foreach sangat berguna untuk membaca isi array.","Array dapat berisi teks, angka, atau data lain."],
-examples:[["Indexed array",`<?php
-$buah = ["Apel", "Jeruk", "Mangga"];
-
-echo $buah[0];
-echo "<br>";
-echo $buah[2];
-?>`],["Associative array",`<?php
-$siswa = [
-    "nama" => "Andi",
-    "kelas" => "X RPL",
-    "jurusan" => "RPL"
-];
-
-echo $siswa["nama"];
-?>`]],
-errors:["Lupa bahwa index dimulai dari 0.","Salah menulis key associative array.","Menggunakan array tanpa memahami struktur datanya."],
-task:"Buat associative array berisi NIS, nama, kelas, jurusan, dan nilai.",
-challenge:"Buat array berisi 5 siswa lalu tampilkan semuanya dalam bentuk tabel HTML."
-},
-{
-title:"Function",level:"Menengah",goal:"Membuat fungsi yang dapat dipanggil berkali-kali.",keywords:["function","return","parameter"],
-explain:`Function adalah blok kode yang diberi nama untuk melakukan pekerjaan tertentu. Function dapat menerima parameter dan mengembalikan hasil dengan return.`,
-analogy:`Function seperti mesin fotokopi. Kita memberikan bahan dan perintah, mesin melakukan pekerjaan, lalu menghasilkan output. Mesin yang sama dapat digunakan berkali-kali.`,
-points:["function membuat kode lebih terorganisir.","Parameter adalah data yang dikirim ke function.","return mengembalikan hasil.","Function dapat dipanggil berkali-kali."],
-examples:[["Function sederhana",`<?php
-function salam() {
-    return "Selamat belajar PHP";
-}
-
-echo salam();
-?>`],["Dengan parameter",`<?php
-function luasPersegi($sisi) {
-    return $sisi * $sisi;
-}
-
-echo luasPersegi(5);
-?>`]],
-errors:["Lupa memanggil function.","Parameter tidak sesuai.","Menggunakan echo dan return tanpa memahami perbedaannya."],
-task:"Buat function luasPersegiPanjang($panjang, $lebar).",
-challenge:"Buat function predikatNilai($nilai) yang mengembalikan A, B, C, atau D."
-},
-{
-title:"Form HTML + PHP",level:"Menengah",goal:"Menerima input pengguna dengan GET dan POST.",keywords:["form","post","get","input","htmlspecialchars"],
-explain:`Form adalah cara pengguna memasukkan data. HTML membuat form, sedangkan PHP menerima dan memproses data tersebut. POST sering digunakan untuk pengiriman data form karena datanya tidak ditampilkan pada URL seperti GET.`,
-analogy:`Form seperti lembar pendaftaran. Siswa mengisi nama dan kelas, lalu petugas (PHP) menerima dan mengolah formulir tersebut.`,
-points:["name pada input menjadi kunci data.","method POST mengirim data melalui request body.","$_POST digunakan untuk mengambil data POST.","Validasi input diperlukan sebelum data diproses.","htmlspecialchars membantu saat menampilkan kembali input ke HTML."],
-examples:[["Form",`<form method="POST">
-    <input type="text" name="nama">
-    <button type="submit">Kirim</button>
-</form>`],["PHP penerima",`<?php
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nama = $_POST["nama"] ?? "";
-    echo "Halo " . htmlspecialchars($nama);
-}
-?>`]],
-errors:["name input tidak ada sehingga key tidak ditemukan.","Tidak mengecek apakah request POST.","Menampilkan input pengguna langsung ke HTML tanpa escaping."],
-task:"Buat form NIS, nama, kelas, dan jurusan. Setelah dikirim, tampilkan kembali datanya.",
-challenge:"Tambahkan validasi: nama tidak boleh kosong dan nilai harus berupa angka."
-},
-{
-title:"Include dan Struktur Project",level:"Menengah",goal:"Membagi kode ke beberapa file agar project rapi.",keywords:["include","require","struktur","file"],
-explain:`Project yang besar akan sulit dirawat jika semua kode diletakkan dalam satu file. include dan require memungkinkan kita memakai kode dari file lain, misalnya header, footer, dan koneksi database.`,
-analogy:`Seperti buku. Daripada semua isi ditulis dalam satu halaman, buku dibagi menjadi bab. Project PHP juga dibagi menjadi file sesuai tugasnya.`,
-points:["Pisahkan koneksi database.","Pisahkan CSS.","Gunakan header/footer untuk bagian yang berulang.","Gunakan nama file yang jelas.","Struktur folder membantu kerja tim."],
-examples:[["Struktur",`data_siswa/
-├── index.php
-├── koneksi.php
-├── header.php
-├── footer.php
-├── tambah.php
-└── style.css`],["include",`<?php
-include "header.php";
-?>
-
-<h1>Data Siswa</h1>
-
-<?php
-include "footer.php";
-?>`]],
-errors:["Path file salah.","Nama file berbeda huruf besar-kecil pada server tertentu.","Memasukkan file yang tidak ada."],
-task:"Buat header.php, footer.php, index.php, dan style.css lalu satukan menjadi halaman sederhana.",
-challenge:"Buat template layout yang dapat dipakai oleh minimal 3 halaman."
-},
-{
-title:"PHP + MySQL/MariaDB dengan XAMPP",level:"Menengah",goal:"Membuat database, tabel, dan koneksi PHP.",keywords:["mysql","mariadb","database","mysqli","phpmyadmin"],
-explain:`Database menyimpan data agar dapat digunakan kembali. PHP menjadi penghubung antara halaman web dan database. Dalam XAMPP, MySQL/MariaDB dapat dikelola melalui phpMyAdmin.`,
-analogy:`Database seperti lemari arsip sekolah. Tabel adalah map, kolom adalah jenis informasi, dan setiap baris adalah satu data siswa.`,
-points:["Buat database, misalnya sekolah.","Buat tabel siswa.","Gunakan primary key pada id.","Buat file koneksi.php.","Gunakan prepared statement untuk input pengguna."],
-examples:[["SQL tabel",`CREATE DATABASE sekolah;
-
-CREATE TABLE siswa (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nis VARCHAR(30) NOT NULL,
-    nama VARCHAR(100) NOT NULL,
-    kelas VARCHAR(20) NOT NULL,
-    jurusan VARCHAR(50) NOT NULL
-);`],["koneksi.php",`<?php
-$koneksi = mysqli_connect(
-    "localhost",
-    "root",
-    "",
-    "sekolah"
-);
-
-if (!$koneksi) {
-    die("Koneksi gagal: " . mysqli_connect_error());
-}
-?>`]],
-errors:["MySQL belum aktif.","Nama database tidak sama dengan yang ditulis di PHP.","Username/password tidak sesuai konfigurasi.","Port database berbeda dari konfigurasi."],
-task:"Buat database sekolah dan tabel siswa melalui phpMyAdmin, lalu buat koneksi.php.",
-challenge:"Tampilkan pesan 'Koneksi berhasil' hanya jika koneksi database benar."
-},
-{
-title:"CRUD - Create dan Read",level:"Lanjutan",goal:"Menambah data dan membaca data dari database.",keywords:["crud","create","read","insert","select"],
-explain:`CRUD adalah empat operasi dasar pengolahan data: Create, Read, Update, Delete. Pada tahap ini fokus pada Create untuk menambah data dan Read untuk menampilkan data.`,
-analogy:`Administrasi siswa: petugas menambahkan siswa baru ke buku (Create), lalu membuka buku untuk melihat daftar siswa (Read).`,
-points:["INSERT digunakan untuk menambah data.","SELECT digunakan membaca data.","Gunakan prepared statement untuk input pengguna.","Tampilkan hasil dalam tabel HTML.","Berikan pesan sukses/gagal."],
-examples:[["Create dengan prepared statement",`$stmt = mysqli_prepare(
-    $koneksi,
-    "INSERT INTO siswa (nis,nama,kelas,jurusan)
-     VALUES (?,?,?,?)"
-);
-
-mysqli_stmt_bind_param(
-    $stmt, "ssss",
-    $nis, $nama, $kelas, $jurusan
-);
-
-mysqli_stmt_execute($stmt);`],["Read",`$result = mysqli_query(
-    $koneksi,
-    "SELECT * FROM siswa ORDER BY id DESC"
-);
-
-while ($row = mysqli_fetch_assoc($result)) {
-    echo $row["nama"] . "<br>";
-}`]],
-errors:["Nama tabel/kolom salah.","Jumlah placeholder ? tidak sama dengan parameter.","Data tidak divalidasi.","Query error tetapi pesan tidak diperiksa."],
-task:"Buat form tambah siswa dan halaman daftar siswa.",
-challenge:"Tampilkan data dalam tabel lengkap dengan nomor urut."
-},
-{
-title:"CRUD - Update dan Delete",level:"Lanjutan",goal:"Mengubah dan menghapus data dengan aman.",keywords:["update","delete","edit","hapus"],
-explain:`Update mengubah data yang sudah ada. Delete menghapus data tertentu. Keduanya harus memakai kondisi WHERE yang tepat agar tidak mengubah atau menghapus seluruh tabel.`,
-analogy:`Saat data siswa salah, petugas memperbaiki baris tertentu (Update). Jika data harus dihapus, petugas menghapus map tertentu (Delete), bukan seluruh arsip.`,
-points:["UPDATE harus memiliki WHERE.","DELETE harus memiliki WHERE.","Validasi ID.","Sebaiknya minta konfirmasi sebelum menghapus.","Pada aplikasi nyata, gunakan autentikasi dan otorisasi."],
-examples:[["Update",`$stmt = mysqli_prepare(
-    $koneksi,
-    "UPDATE siswa SET nama=?, kelas=? WHERE id=?"
-);
-
-mysqli_stmt_bind_param(
-    $stmt, "ssi",
-    $nama, $kelas, $id
-);
-
-mysqli_stmt_execute($stmt);`],["Delete",`$stmt = mysqli_prepare(
-    $koneksi,
-    "DELETE FROM siswa WHERE id=?"
-);
-
-mysqli_stmt_bind_param($stmt, "i", $id);
-mysqli_stmt_execute($stmt);`]],
-errors:["Lupa WHERE sehingga semua data bisa berubah/terhapus.","ID tidak valid.","Menghapus tanpa konfirmasi."],
-task:"Tambahkan tombol Edit dan Hapus pada daftar siswa.",
-challenge:"Tambahkan halaman konfirmasi sebelum proses delete."
-},
-{
-title:"Validasi, Keamanan Dasar, dan Debugging",level:"Lanjutan",goal:"Membuat program lebih aman dan lebih mudah dicari kesalahannya.",keywords:["validasi","keamanan","debugging","prepared statement"],
-explain:`Program yang berjalan belum tentu aman. Input pengguna harus divalidasi. Query database sebaiknya menggunakan prepared statement. Output yang dimasukkan kembali ke HTML perlu di-escape. Debugging adalah proses mencari penyebab kesalahan program.`,
-analogy:`Seperti gerbang sekolah. Satpam memeriksa orang yang masuk, mencatat data, dan memastikan mereka menuju tempat yang benar. Validasi dan kontrol akses memiliki fungsi serupa dalam aplikasi.`,
-points:["Validasi input wajib.","Gunakan prepared statement untuk query dengan input pengguna.","Gunakan htmlspecialchars saat menampilkan teks ke HTML.","Jangan menampilkan detail error database kepada pengguna umum pada production.","Pisahkan pesan error teknis dari pesan yang dilihat pengguna."],
-examples:[["Validasi sederhana",`$nama = trim($_POST["nama"] ?? "");
-
-if ($nama === "") {
-    die("Nama wajib diisi.");
-}`],["Escape output",`echo htmlspecialchars(
-    $nama,
-    ENT_QUOTES,
-    "UTF-8"
-);`]],
-errors:["Menganggap validasi HTML saja sudah cukup.","Menyusun query SQL langsung dari input pengguna.","Menampilkan error sensitif ke publik."],
-task:"Tambahkan validasi nama, kelas, dan NIS pada form siswa.",
-challenge:"Buat validasi panjang NIS dan tampilkan pesan error yang ramah."
-},
-{
-title:"Proyek Akhir - Aplikasi Data Siswa RPL",level:"Proyek",goal:"Menggabungkan HTML, CSS, PHP, dan MySQL menjadi aplikasi CRUD.",keywords:["proyek","crud","aplikasi","data siswa"],
-explain:`Proyek akhir menggabungkan semua materi. Siswa membuat aplikasi Data Siswa RPL yang dapat menambah, melihat, mengubah, dan menghapus data.`,
-analogy:`Ini seperti membangun rumah dari materi sebelumnya: HTML menjadi struktur, CSS menjadi tampilan, PHP menjadi logika, dan database menjadi tempat penyimpanan.`,
-points:["Dashboard sederhana.","Tambah siswa.","Daftar siswa.","Edit siswa.","Hapus siswa.","Pencarian siswa.","Validasi form.","Tampilan responsive.","Dokumentasi project."],
-examples:[["Struktur",`data_siswa/
-├── index.php
-├── koneksi.php
-├── tambah.php
-├── proses_tambah.php
-├── edit.php
-├── proses_edit.php
-├── hapus.php
-├── style.css
-└── README.txt`],["Checklist",`[ ] Apache aktif
-[ ] Database dibuat
-[ ] Koneksi berhasil
-[ ] Create berhasil
-[ ] Read berhasil
-[ ] Update berhasil
-[ ] Delete berhasil
-[ ] Validasi berjalan
-[ ] CSS rapi`]],
-errors:["Mengerjakan CRUD sebelum memahami form dan koneksi.","Semua kode dimasukkan ke satu file.","Tidak melakukan pengujian setelah setiap fitur selesai."],
-task:"Bangun aplikasi Data Siswa RPL sampai CRUD lengkap.",
-challenge:"Tambahkan pencarian berdasarkan nama/NIS dan jumlah data siswa."
-}
+  {
+    "title": "Pengenalan PHP",
+    "level": "Dasar",
+    "goal": "Memahami apa itu PHP, cara kerja PHP, perbedaan PHP dengan HTML/CSS/JavaScript, dan contoh penggunaan PHP dalam aplikasi sehari-hari.",
+    "keywords": [
+      "php",
+      "server",
+      "website",
+      "dinamis"
+    ],
+    "explain": "PHP (PHP: Hypertext Preprocessor) adalah bahasa pemrograman yang umum digunakan untuk membuat aplikasi web dinamis. PHP diproses di server. Browser tidak menerima kode PHP mentah, tetapi menerima hasil yang sudah diproses oleh server. Karena itu PHP cocok untuk halaman yang membutuhkan logika, input pengguna, login, pengolahan data, dan koneksi database.",
+    "analogy": "Bayangkan website seperti restoran. HTML adalah kerangka meja dan ruangan, CSS adalah dekorasi dan warna, JavaScript dapat membuat interaksi di meja, sedangkan PHP adalah koki di dapur yang menerima pesanan, mengolah data, lalu mengirim hasilnya kepada pelanggan. Database adalah gudang penyimpanan data.",
+    "points": [
+      "PHP diproses di server.",
+      "Browser menerima hasil pemrosesan PHP.",
+      "File PHP biasanya berekstensi .php.",
+      "PHP dapat menghasilkan HTML.",
+      "PHP dapat menerima input dari form.",
+      "PHP dapat terhubung ke MySQL/MariaDB.",
+      "PHP banyak digunakan untuk login, CRUD, sistem informasi, dan aplikasi sekolah."
+    ],
+    "subtopics": [
+      "Apa itu PHP",
+      "Cara kerja PHP",
+      "PHP vs HTML, CSS, JavaScript",
+      "Server dan browser",
+      "Contoh penggunaan PHP"
+    ],
+    "guided": "Setelah membaca materi, siswa harus dapat menjelaskan dengan kalimat sendiri mengapa file PHP perlu dijalankan melalui server ketika kode PHP benar-benar digunakan.",
+    "examples": [
+      [
+        "Program PHP pertama",
+        "<?php\necho \"Halo Dunia!\";\n?>"
+      ],
+      [
+        "PHP menghasilkan HTML",
+        "<!DOCTYPE html>\n<html>\n<body>\n    <h1>Profil Siswa</h1>\n    <?php\n        echo \"Nama: Andi\";\n        echo \"<br>Kelas: X RPL\";\n    ?>\n</body>\n</html>"
+      ],
+      [
+        "Informasi dinamis sederhana",
+        "<?php\n$nama = \"Andi\";\n$kelas = \"X RPL\";\necho \"Nama: \" . $nama;\necho \"<br>Kelas: \" . $kelas;\n?>"
+      ]
+    ],
+    "errors": [
+      "Mengira PHP dapat dijalankan dengan double-click seperti file HTML biasa.",
+      "Menyimpan kode PHP sebagai .html lalu berharap PHP diproses.",
+      "Menganggap browser menjalankan PHP secara langsung.",
+      "Belum membedakan kode yang berjalan di server dan kode yang berjalan di browser."
+    ],
+    "task": "Buat index.php yang menampilkan nama, kelas, jurusan, dan satu kalimat motivasi menggunakan PHP.",
+    "challenge": "Buat halaman profil siswa sederhana yang menampilkan minimal lima informasi berbeda.",
+    "reflection": "Jelaskan dengan bahasa sendiri: apa perbedaan tugas HTML, CSS, dan PHP?",
+    "practice": "Gunakan simulator untuk mencoba echo dan variabel. Untuk menjalankan PHP asli, gunakan XAMPP.",
+    "xampp": "Buat folder belajar_php di C:\\xampp\\htdocs\\, simpan index.php, aktifkan Apache, lalu buka http://localhost/belajar_php/."
+  },
+  {
+    "title": "XAMPP dan Menjalankan PHP",
+    "level": "Dasar",
+    "goal": "Mampu menyiapkan lingkungan kerja PHP menggunakan XAMPP, membuat project, dan menjalankannya melalui localhost.",
+    "keywords": [
+      "xampp",
+      "apache",
+      "localhost",
+      "htdocs",
+      "phpmyadmin"
+    ],
+    "explain": "XAMPP adalah paket lingkungan server lokal yang memudahkan pembelajaran web. Apache berperan sebagai web server yang menerima permintaan halaman. PHP memproses file PHP. MySQL/MariaDB digunakan untuk database. phpMyAdmin membantu mengelola database melalui browser.",
+    "analogy": "XAMPP seperti bengkel praktik di komputer. Apache adalah pintu bengkel, PHP adalah mesin yang mengolah pekerjaan, MySQL adalah lemari penyimpanan data, dan browser adalah layar tempat hasil pekerjaan dilihat.",
+    "points": [
+      "Apache harus aktif untuk menjalankan PHP melalui localhost.",
+      "Project PHP Windows biasanya disimpan di C:\\xampp\\htdocs\\.",
+      "URL localhost mengarah ke komputer sendiri.",
+      "MySQL/MariaDB perlu aktif untuk latihan database.",
+      "phpMyAdmin dapat dibuka dari menu XAMPP atau alamat localhost/phpmyadmin/.",
+      "Jika port bentrok, periksa konfigurasi Apache dan aplikasi lain yang memakai port tersebut."
+    ],
+    "subtopics": [
+      "Mengenal XAMPP",
+      "Apache",
+      "PHP",
+      "MySQL/MariaDB",
+      "htdocs",
+      "localhost",
+      "phpMyAdmin",
+      "Masalah umum XAMPP"
+    ],
+    "guided": "Siswa melakukan praktik membuat folder project, file index.php, menjalankan Apache, lalu membuka project dari browser.",
+    "examples": [
+      [
+        "Struktur project",
+        "C:\\xampp\\htdocs\\belajar_php\\\n├── index.php\n└── style.css"
+      ],
+      [
+        "index.php",
+        "<?php\necho \"PHP berhasil berjalan melalui XAMPP\";\n?>"
+      ],
+      [
+        "Alamat project",
+        "http://localhost/belajar_php/"
+      ],
+      [
+        "Pengecekan PHP",
+        "<?php\nphpinfo();\n?>"
+      ]
+    ],
+    "errors": [
+      "Apache belum aktif.",
+      "Project disimpan di luar htdocs tetapi dibuka melalui localhost.",
+      "Alamat folder pada URL tidak sesuai nama folder project.",
+      "Port Apache bentrok.",
+      "Mencampur file project dengan file instalasi XAMPP."
+    ],
+    "task": "Buat project belajar_php, buat index.php, aktifkan Apache, dan tampilkan pesan bahwa PHP berhasil berjalan.",
+    "challenge": "Buat profil.php dan halaman index.php yang memiliki link menuju profil.php.",
+    "reflection": "Apa fungsi Apache? Mengapa file PHP tidak cukup dibuka dengan double-click?",
+    "practice": "Gunakan XAMPP, bukan simulator browser, untuk memastikan PHP asli berjalan.",
+    "xampp": "Langkah: Start Apache → buat C:\\xampp\\htdocs\\belajar_php → buat index.php → buka http://localhost/belajar_php/."
+  },
+  {
+    "title": "Sintaks Dasar PHP",
+    "level": "Dasar",
+    "goal": "Menguasai struktur penulisan PHP, tag PHP, statement, titik koma, komentar, echo, print, string, penggabungan teks, serta kesalahan sintaks umum.",
+    "keywords": [
+      "syntax",
+      "echo",
+      "print",
+      "komentar",
+      "semicolon",
+      "string"
+    ],
+    "explain": "Sintaks adalah aturan penulisan yang harus diikuti agar PHP dapat memahami program. Materi ini menjadi fondasi sebelum belajar variabel, percabangan, perulangan, form, dan database. Siswa perlu memahami kapan PHP dibuka, bagaimana statement ditulis, kapan tanda titik koma digunakan, bagaimana komentar dibuat, serta bagaimana teks ditampilkan.",
+    "analogy": "Sintaks seperti tata bahasa. Kalimat yang mengikuti aturan lebih mudah dipahami. Pada program, kesalahan tanda, kurung, atau penulisan dapat membuat parser PHP berhenti dan menghasilkan error.",
+    "points": [
+      "Kode PHP umumnya dimulai dengan <?php.",
+      "Tag penutup ?> boleh digunakan pada file yang hanya berisi PHP, tetapi sering dihilangkan pada file PHP murni untuk menghindari whitespace tidak sengaja.",
+      "Statement PHP umumnya diakhiri ;.",
+      "echo menampilkan satu atau lebih nilai.",
+      "print juga menampilkan nilai dan mengembalikan nilai 1.",
+      "Komentar tidak dieksekusi.",
+      "String ditulis dengan tanda kutip tunggal atau ganda.",
+      "Operator titik (.) digunakan untuk menggabungkan string.",
+      "Nama variabel bersifat case-sensitive."
+    ],
+    "subtopics": [
+      "Tag PHP",
+      "Statement",
+      "Semicolon",
+      "Echo",
+      "Print",
+      "Komentar",
+      "String",
+      "Concatenation",
+      "Case sensitivity",
+      "Sintaks dan error"
+    ],
+    "guided": "Pelajari satu konsep lalu ubah contoh sedikit demi sedikit. Jangan langsung menulis program panjang sebelum memahami setiap simbol.",
+    "examples": [
+      [
+        "Struktur paling dasar",
+        "<?php\necho \"Selamat datang di kelas X RPL\";\n?>"
+      ],
+      [
+        "Echo dan print",
+        "<?php\necho \"Baris pertama<br>\";\nprint \"Baris kedua\";\n?>"
+      ],
+      [
+        "Komentar",
+        "<?php\n// Komentar satu baris\n# Komentar satu baris juga\n/*\n   Komentar beberapa baris\n*/\necho \"Program tetap berjalan\";\n?>"
+      ],
+      [
+        "Menggabungkan string",
+        "<?php\n$nama = \"Andi\";\n$kelas = \"X RPL\";\necho \"Nama: \" . $nama . \"<br>\";\necho \"Kelas: \" . $kelas;\n?>"
+      ],
+      [
+        "PHP tanpa tag penutup",
+        "<?php\necho \"Tag penutup tidak wajib pada file PHP murni\";\n"
+      ]
+    ],
+    "errors": [
+      "Menulis <? php dengan spasi.",
+      "Lupa titik koma pada statement.",
+      "Membuka kurung tetapi tidak menutupnya.",
+      "Tanda kutip pembuka dan penutup tidak cocok.",
+      "Salah menulis nama variabel, misalnya $Nama dan $nama dianggap berbeda.",
+      "Menulis kode PHP di luar struktur yang benar."
+    ],
+    "task": "Buat program yang menampilkan lima informasi diri. Gunakan echo atau print dan tambahkan minimal tiga komentar.",
+    "challenge": "Buat halaman profil yang menggabungkan HTML dan PHP. Gunakan minimal tiga echo untuk menampilkan informasi.",
+    "reflection": "Mengapa satu tanda titik koma atau tanda kutip yang hilang dapat membuat program gagal?",
+    "practice": "Coba hapus satu titik koma dari contoh lalu jalankan melalui XAMPP untuk melihat pesan error. Kembalikan kode setelah memahami penyebabnya.",
+    "xampp": "Praktik sintaks yang menghasilkan error sebaiknya dilakukan melalui XAMPP agar siswa dapat melihat pesan error PHP yang sebenarnya."
+  },
+  {
+    "title": "Variabel dan Tipe Data",
+    "level": "Dasar",
+    "goal": "Mampu membuat variabel, memberikan nilai, mengubah nilai, serta mengenali string, integer, float, boolean, null, dan cara memeriksa tipe data.",
+    "keywords": [
+      "variabel",
+      "string",
+      "integer",
+      "float",
+      "boolean",
+      "null",
+      "typeof"
+    ],
+    "explain": "Variabel adalah nama yang digunakan program untuk menyimpan nilai selama program berjalan. PHP memiliki beberapa tipe data dasar. String menyimpan teks, integer menyimpan bilangan bulat, float menyimpan bilangan desimal, boolean menyimpan true atau false, dan null menunjukkan tidak ada nilai.",
+    "analogy": "Variabel seperti kotak berlabel. Kotak $nama berisi teks nama, $umur berisi angka, dan $lulus berisi true atau false. Label membantu program mengambil data yang tepat.",
+    "points": [
+      "Nama variabel diawali $.",
+      "Nama variabel dapat berisi huruf, angka, dan underscore tetapi tidak boleh diawali angka.",
+      "String adalah teks.",
+      "Integer adalah bilangan bulat.",
+      "Float adalah bilangan desimal.",
+      "Boolean hanya true atau false.",
+      "NULL berarti variabel tidak memiliki nilai.",
+      "var_dump() berguna untuk melihat nilai sekaligus tipe data."
+    ],
+    "subtopics": [
+      "Deklarasi variabel",
+      "Aturan nama variabel",
+      "String",
+      "Integer",
+      "Float",
+      "Boolean",
+      "NULL",
+      "var_dump",
+      "Mengubah nilai variabel"
+    ],
+    "guided": "Latih variabel dari data paling sederhana. Buat satu variabel, tampilkan, lalu ubah nilainya dan amati hasilnya.",
+    "examples": [
+      [
+        "Beberapa tipe data",
+        "<?php\n$nama = \"Andi\";\n$umur = 16;\n$nilai = 87.5;\n$lulus = true;\n$catatan = null;\n\nvar_dump($nama);\nvar_dump($umur);\nvar_dump($nilai);\nvar_dump($lulus);\nvar_dump($catatan);\n?>"
+      ],
+      [
+        "Mengubah nilai",
+        "<?php\n$kelas = \"X RPL\";\necho $kelas;\n$kelas = \"XI RPL\";\necho \"<br>\" . $kelas;\n?>"
+      ],
+      [
+        "Gabungan variabel",
+        "<?php\n$nama = \"Andi\";\n$kelas = \"X RPL\";\n$nilai = 88;\necho \"Nama saya $nama\";\necho \"<br>Kelas: $kelas\";\necho \"<br>Nilai: \" . $nilai;\n?>"
+      ]
+    ],
+    "errors": [
+      "Lupa tanda $ pada nama variabel.",
+      "Nama variabel diawali angka.",
+      "Menganggap teks angka selalu bertipe integer.",
+      "Membedakan $nama dan $Nama secara tidak tepat.",
+      "Menggunakan variabel sebelum diberi nilai tanpa memahami hasilnya."
+    ],
+    "task": "Buat variabel NIS, nama, kelas, jurusan, nilai, dan status kelulusan. Tampilkan semuanya.",
+    "challenge": "Buat kartu data siswa yang menampilkan nama, kelas, nilai, dan status lulus berdasarkan boolean.",
+    "reflection": "Mengapa tipe data penting ketika program mulai melakukan perhitungan dan perbandingan?",
+    "practice": "Gunakan var_dump() untuk melihat tipe data setiap variabel.",
+    "xampp": "Simpan latihan sebagai variabel.php dan jalankan melalui http://localhost/belajar_php/variabel.php."
+  },
+  {
+    "title": "Operator PHP",
+    "level": "Dasar",
+    "goal": "Menggunakan operator aritmatika, assignment, perbandingan, logika, increment/decrement, dan memahami prioritas operasi.",
+    "keywords": [
+      "operator",
+      "aritmatika",
+      "perbandingan",
+      "logika",
+      "assignment"
+    ],
+    "explain": "Operator adalah simbol atau kata yang digunakan untuk melakukan operasi terhadap nilai. Operator aritmatika dipakai untuk menghitung, assignment untuk memberi atau memperbarui nilai, perbandingan untuk menghasilkan true/false, dan logika untuk menggabungkan beberapa kondisi.",
+    "analogy": "Operator seperti tombol pada kalkulator dan aturan keputusan. Tanda + menghitung, tanda > membandingkan, sedangkan && seperti kata 'dan' dalam sebuah aturan.",
+    "points": [
+      "+ untuk penjumlahan.",
+      "- untuk pengurangan.",
+      "* untuk perkalian.",
+      "/ untuk pembagian.",
+      "% untuk sisa bagi.",
+      "= untuk assignment.",
+      "== membandingkan nilai.",
+      "=== membandingkan nilai dan tipe data.",
+      "!= dan !== untuk ketidaksamaan.",
+      "&& berarti AND.",
+      "|| berarti OR.",
+      "! membalik nilai boolean.",
+      "++ menambah 1 dan -- mengurangi 1."
+    ],
+    "subtopics": [
+      "Aritmatika",
+      "Assignment",
+      "Perbandingan",
+      "Identik ===",
+      "Logika",
+      "Increment dan decrement",
+      "Prioritas operasi"
+    ],
+    "guided": "Mulai dengan operasi dua angka, kemudian gunakan operator perbandingan untuk membuat kondisi.",
+    "examples": [
+      [
+        "Aritmatika",
+        "<?php\n$a = 10;\n$b = 3;\necho \"Tambah: \" . ($a + $b) . \"<br>\";\necho \"Kurang: \" . ($a - $b) . \"<br>\";\necho \"Kali: \" . ($a * $b) . \"<br>\";\necho \"Bagi: \" . ($a / $b) . \"<br>\";\necho \"Sisa: \" . ($a % $b);\n?>"
+      ],
+      [
+        "Perbandingan",
+        "<?php\n$nilai = 80;\nvar_dump($nilai >= 75);\nvar_dump($nilai === \"80\");\n?>"
+      ],
+      [
+        "Logika",
+        "<?php\n$nilai = 85;\n$hadir = 90;\n$lulus = $nilai >= 75 && $hadir >= 80;\nvar_dump($lulus);\n?>"
+      ],
+      [
+        "Increment",
+        "<?php\n$nomor = 1;\necho $nomor . \"<br>\";\n$nomor++;\necho $nomor;\n?>"
+      ]
+    ],
+    "errors": [
+      "Menggunakan = ketika sebenarnya ingin membandingkan.",
+      "Mengabaikan perbedaan == dan ===.",
+      "Membagi dengan nol.",
+      "Lupa menggunakan tanda kurung ketika ekspresi menjadi kompleks."
+    ],
+    "task": "Buat kalkulator nilai sederhana yang menghitung jumlah, rata-rata, dan menentukan apakah nilai memenuhi batas minimal.",
+    "challenge": "Buat aturan kelulusan berdasarkan nilai minimal dan persentase kehadiran.",
+    "reflection": "Apa perbedaan assignment dengan comparison?",
+    "practice": "Ubah nilai dan kondisi pada contoh lalu amati hasil true/false.",
+    "xampp": "Operator dapat dicoba melalui simulator atau PHP asli. Untuk program lengkap, simpan sebagai operator.php."
+  },
+  {
+    "title": "Percabangan if, elseif, else",
+    "level": "Dasar",
+    "goal": "Membuat program yang dapat mengambil keputusan berdasarkan kondisi.",
+    "keywords": [
+      "if",
+      "elseif",
+      "else",
+      "condition",
+      "decision"
+    ],
+    "explain": "Percabangan memungkinkan program memilih tindakan berdasarkan kondisi. if digunakan untuk kondisi utama, elseif untuk kondisi alternatif, dan else untuk kondisi ketika semua pemeriksaan sebelumnya tidak terpenuhi.",
+    "analogy": "Seperti guru menentukan kategori nilai. Jika nilai minimal 90 maka A, jika tidak tetapi minimal 80 maka B, dan seterusnya. Program mengikuti aturan tersebut secara berurutan.",
+    "points": [
+      "Kondisi biasanya menghasilkan true atau false.",
+      "if memeriksa kondisi pertama.",
+      "elseif digunakan untuk kondisi lanjutan.",
+      "else menjadi pilihan terakhir.",
+      "Gunakan operator perbandingan dan logika untuk membangun kondisi."
+    ],
+    "subtopics": [
+      "Kondisi",
+      "if",
+      "elseif",
+      "else",
+      "Operator kondisi",
+      "Nested if",
+      "Validasi sederhana"
+    ],
+    "guided": "Tuliskan aturan keputusan dalam bahasa manusia terlebih dahulu, lalu ubah menjadi kondisi PHP.",
+    "examples": [
+      [
+        "If sederhana",
+        "<?php\n$nilai = 80;\nif ($nilai >= 75) {\n    echo \"Lulus\";\n}\n?>"
+      ],
+      [
+        "If else",
+        "<?php\n$nilai = 65;\nif ($nilai >= 75) {\n    echo \"Lulus\";\n} else {\n    echo \"Belum lulus\";\n}\n?>"
+      ],
+      [
+        "If elseif else",
+        "<?php\n$nilai = 88;\nif ($nilai >= 90) {\n    echo \"Predikat A\";\n} elseif ($nilai >= 80) {\n    echo \"Predikat B\";\n} elseif ($nilai >= 70) {\n    echo \"Predikat C\";\n} else {\n    echo \"Perlu belajar lagi\";\n}\n?>"
+      ],
+      [
+        "Gabungan kondisi",
+        "<?php\n$nilai = 85;\n$hadir = 90;\nif ($nilai >= 75 && $hadir >= 80) {\n    echo \"Lulus\";\n} else {\n    echo \"Belum memenuhi syarat\";\n}\n?>"
+      ]
+    ],
+    "errors": [
+      "Urutan kondisi tidak tepat.",
+      "Memakai = di dalam kondisi untuk assignment tanpa sengaja.",
+      "Lupa kurung kurawal.",
+      "Membuat kondisi yang saling tumpang tindih tanpa memahami urutan pemeriksaan."
+    ],
+    "task": "Buat program kategori nilai A, B, C, D berdasarkan rentang nilai.",
+    "challenge": "Buat sistem sederhana yang menentukan status siswa berdasarkan nilai dan kehadiran.",
+    "reflection": "Mengapa urutan if dan elseif penting?",
+    "practice": "Ubah nilai contoh menjadi 95, 82, 72, dan 50 lalu catat hasilnya.",
+    "xampp": "Jalankan contoh melalui XAMPP jika ingin melihat perilaku PHP asli."
+  },
+  {
+    "title": "Perulangan",
+    "level": "Dasar",
+    "goal": "Memahami dan menggunakan for, while, do-while, serta foreach untuk mengulang pekerjaan secara efisien.",
+    "keywords": [
+      "loop",
+      "for",
+      "while",
+      "do while",
+      "foreach"
+    ],
+    "explain": "Perulangan digunakan ketika instruksi yang sama perlu dijalankan berkali-kali. for cocok ketika jumlah pengulangan diketahui, while cocok ketika pengulangan bergantung pada kondisi, do-while menjalankan blok minimal sekali, dan foreach cocok untuk membaca elemen array satu per satu.",
+    "analogy": "Daripada menulis 'tulis nama siswa' 30 kali, kita memberi aturan kepada komputer untuk mengulang proses sampai jumlah yang ditentukan.",
+    "points": [
+      "for memiliki nilai awal, kondisi, dan perubahan penghitung.",
+      "while mengecek kondisi sebelum menjalankan blok.",
+      "do-while menjalankan blok lebih dulu lalu memeriksa kondisi.",
+      "foreach dirancang untuk array atau iterable.",
+      "Pastikan kondisi loop dapat berhenti agar tidak terjadi infinite loop."
+    ],
+    "subtopics": [
+      "for",
+      "while",
+      "do-while",
+      "foreach",
+      "Counter",
+      "Infinite loop",
+      "Loop pada array"
+    ],
+    "guided": "Mulai dari for 1–5, lalu ubah menjadi while. Setelah memahami konsep, gunakan foreach untuk array.",
+    "examples": [
+      [
+        "For",
+        "<?php\nfor ($i = 1; $i <= 5; $i++) {\n    echo \"Nomor: $i<br>\";\n}\n?>"
+      ],
+      [
+        "While",
+        "<?php\n$i = 1;\nwhile ($i <= 5) {\n    echo \"Perulangan ke-$i<br>\";\n    $i++;\n}\n?>"
+      ],
+      [
+        "Do while",
+        "<?php\n$i = 1;\ndo {\n    echo \"Nilai: $i<br>\";\n    $i++;\n} while ($i <= 3);\n?>"
+      ],
+      [
+        "Foreach",
+        "<?php\n$jurusan = [\"RPL\", \"TKJ\", \"DKV\"];\nforeach ($jurusan as $item) {\n    echo $item . \"<br>\";\n}\n?>"
+      ]
+    ],
+    "errors": [
+      "Lupa menaikkan penghitung pada while.",
+      "Kondisi tidak pernah menjadi false sehingga terjadi infinite loop.",
+      "Salah menulis kondisi batas.",
+      "Menggunakan for padahal lebih sederhana menggunakan foreach."
+    ],
+    "task": "Tampilkan angka 1 sampai 20 menggunakan for.",
+    "challenge": "Buat daftar nama siswa dari array menggunakan foreach.",
+    "reflection": "Kapan sebaiknya menggunakan for dan kapan menggunakan foreach?",
+    "practice": "Ubah jumlah pengulangan dan amati perubahan output.",
+    "xampp": "Perulangan dapat dijalankan di simulator untuk contoh sederhana dan di XAMPP untuk PHP asli."
+  },
+  {
+    "title": "Array",
+    "level": "Menengah",
+    "goal": "Memahami indexed array, associative array, multidimensional array, akses elemen, count, dan foreach.",
+    "keywords": [
+      "array",
+      "indexed",
+      "associative",
+      "multidimensional",
+      "foreach"
+    ],
+    "explain": "Array adalah struktur data untuk menyimpan banyak nilai dalam satu variabel. Indexed array menggunakan indeks angka, associative array menggunakan key, dan multidimensional array menyimpan array di dalam array.",
+    "analogy": "Array seperti lemari dengan banyak laci. Indexed array memakai nomor laci, associative array memberi label pada laci, dan multidimensional array seperti lemari yang memiliki beberapa kelompok laci.",
+    "points": [
+      "Indexed array umumnya dimulai dari indeks 0.",
+      "Associative array memakai key seperti nama.",
+      "count() menghitung jumlah elemen.",
+      "foreach cocok untuk membaca array.",
+      "Elemen dapat diubah melalui index/key.",
+      "Array multidimensi dapat menyimpan data yang lebih terstruktur."
+    ],
+    "subtopics": [
+      "Indexed array",
+      "Associative array",
+      "Akses elemen",
+      "count",
+      "foreach",
+      "Multidimensional array"
+    ],
+    "guided": "Buat array sederhana terlebih dahulu, akses satu elemen, lalu tampilkan semua elemen dengan foreach.",
+    "examples": [
+      [
+        "Indexed array",
+        "<?php\n$buah = [\"Apel\", \"Jeruk\", \"Mangga\"];\necho $buah[0];\necho \"<br>\" . $buah[2];\n?>"
+      ],
+      [
+        "Foreach dan count",
+        "<?php\n$buah = [\"Apel\", \"Jeruk\", \"Mangga\"];\necho \"Jumlah: \" . count($buah) . \"<br>\";\nforeach ($buah as $item) {\n    echo $item . \"<br>\";\n}\n?>"
+      ],
+      [
+        "Associative array",
+        "<?php\n$siswa = [\n    \"nama\" => \"Andi\",\n    \"kelas\" => \"X RPL\",\n    \"nilai\" => 88\n];\necho $siswa[\"nama\"];\necho \"<br>\" . $siswa[\"nilai\"];\n?>"
+      ],
+      [
+        "Multidimensional array",
+        "<?php\n$siswa = [\n    [\"Andi\", 88],\n    [\"Budi\", 92]\n];\necho $siswa[0][0];\necho \"<br>\" . $siswa[1][1];\n?>"
+      ]
+    ],
+    "errors": [
+      "Mengakses indeks yang tidak ada.",
+      "Mengira indexed array dimulai dari 1.",
+      "Salah menulis key associative array.",
+      "Mencampur sintaks array lama dan baru tanpa memahami perbedaannya."
+    ],
+    "task": "Buat array berisi lima nama siswa lalu tampilkan menggunakan foreach.",
+    "challenge": "Buat array associative berisi nama, NIS, kelas, jurusan, dan nilai seorang siswa.",
+    "reflection": "Mengapa array lebih efisien daripada membuat banyak variabel terpisah untuk data sejenis?",
+    "practice": "Gunakan simulator untuk indexed dan associative array sederhana.",
+    "xampp": "Untuk data siswa yang jumlahnya besar dan permanen, lanjutkan ke database pada materi berikutnya."
+  },
+  {
+    "title": "Function",
+    "level": "Menengah",
+    "goal": "Membuat function, parameter, return value, default parameter, dan memahami manfaat modularisasi kode.",
+    "keywords": [
+      "function",
+      "parameter",
+      "return",
+      "modular"
+    ],
+    "explain": "Function adalah blok kode yang diberi nama sehingga dapat dipanggil kembali. Function membantu mengurangi pengulangan kode, membuat program lebih terstruktur, dan memudahkan pengujian.",
+    "analogy": "Function seperti mesin fotokopi atau resep. Kita membuat prosedurnya sekali, lalu menggunakannya berkali-kali dengan input yang berbeda.",
+    "points": [
+      "Function dibuat dengan kata function.",
+      "Parameter menerima data dari pemanggil.",
+      "return mengembalikan hasil.",
+      "Function dapat dipanggil berkali-kali.",
+      "Gunakan nama function yang jelas.",
+      "Pisahkan tugas program menjadi fungsi kecil yang mudah dipahami."
+    ],
+    "subtopics": [
+      "Deklarasi function",
+      "Pemanggilan",
+      "Parameter",
+      "Return",
+      "Default parameter",
+      "Modularisasi"
+    ],
+    "guided": "Buat function tanpa parameter, lalu tambahkan parameter dan return.",
+    "examples": [
+      [
+        "Function sederhana",
+        "<?php\nfunction sapa() {\n    echo \"Halo siswa X RPL\";\n}\nsapa();\n?>"
+      ],
+      [
+        "Parameter",
+        "<?php\nfunction sapa($nama) {\n    echo \"Halo \" . $nama;\n}\nsapa(\"Andi\");\n?>"
+      ],
+      [
+        "Return",
+        "<?php\nfunction luasPersegi($sisi) {\n    return $sisi * $sisi;\n}\n$hasil = luasPersegi(5);\necho \"Luas: \" . $hasil;\n?>"
+      ],
+      [
+        "Default parameter",
+        "<?php\nfunction salam($nama = \"Siswa\") {\n    return \"Halo \" . $nama;\n}\necho salam();\necho \"<br>\" . salam(\"Budi\");\n?>"
+      ]
+    ],
+    "errors": [
+      "Membuat function tetapi tidak memanggilnya.",
+      "Parameter dan argumen tidak sesuai.",
+      "Lupa return ketika hasil function ingin digunakan.",
+      "Membuat function terlalu besar dan melakukan terlalu banyak tugas."
+    ],
+    "task": "Buat function untuk menghitung luas persegi panjang.",
+    "challenge": "Buat beberapa function kecil untuk menghitung total, rata-rata, dan menentukan status nilai.",
+    "reflection": "Apa keuntungan function dibanding menulis kode yang sama berulang kali?",
+    "practice": "Ubah parameter contoh dan periksa hasilnya.",
+    "xampp": "Function dapat digunakan pada semua file PHP dan menjadi dasar struktur aplikasi yang lebih besar."
+  },
+  {
+    "title": "Form HTML + PHP",
+    "level": "Menengah",
+    "goal": "Memahami form HTML, method GET/POST, name input, membaca data dengan superglobal, validasi dasar, dan menampilkan kembali data dengan aman.",
+    "keywords": [
+      "form",
+      "input",
+      "post",
+      "get",
+      "validation",
+      "htmlspecialchars"
+    ],
+    "explain": "Form adalah jembatan antara pengguna dan program. HTML menyediakan input dan tombol, sedangkan PHP menerima, memeriksa, mengolah, dan menampilkan data. Atribut name sangat penting karena menjadi nama data yang dibaca oleh PHP. Method GET mengirim data melalui URL, sedangkan POST mengirim data melalui request body dan umum digunakan untuk data form.",
+    "analogy": "Form seperti formulir pendaftaran sekolah. Siswa mengisi kolom, petugas menerima formulir, memeriksa kelengkapan, lalu menyimpan atau memprosesnya.",
+    "points": [
+      "Setiap input yang ingin dibaca PHP harus memiliki atribut name.",
+      "GET cocok untuk data yang ingin terlihat pada URL dan pencarian.",
+      "POST umum digunakan untuk pengiriman form.",
+      "Validasi memeriksa data sebelum diproses.",
+      "trim() dapat menghapus spasi awal/akhir.",
+      "htmlspecialchars() membantu saat menampilkan input pengguna sebagai HTML."
+    ],
+    "subtopics": [
+      "Form HTML",
+      "input",
+      "name",
+      "method GET",
+      "method POST",
+      "$_GET",
+      "$_POST",
+      "Validasi",
+      "htmlspecialchars"
+    ],
+    "guided": "Buat form nama sederhana terlebih dahulu, lalu tambahkan kelas dan validasi.",
+    "examples": [
+      [
+        "Form POST sederhana",
+        "<form method=\"post\">\n    <label>Nama</label>\n    <input type=\"text\" name=\"nama\">\n    <button type=\"submit\">Kirim</button>\n</form>\n\n<?php\n$nama = $_POST[\"nama\"] ?? \"\";\nif ($nama !== \"\") {\n    echo \"Halo \" . htmlspecialchars($nama);\n}\n?>"
+      ],
+      [
+        "Validasi wajib diisi",
+        "<?php\n$nama = trim($_POST[\"nama\"] ?? \"\");\n\nif ($nama === \"\") {\n    die(\"Nama wajib diisi.\");\n}\n\necho \"Halo \" . htmlspecialchars($nama);\n?>"
+      ],
+      [
+        "GET sederhana",
+        "<form method=\"get\">\n    <input type=\"text\" name=\"q\" placeholder=\"Cari nama\">\n    <button type=\"submit\">Cari</button>\n</form>\n\n<?php\n$q = $_GET[\"q\"] ?? \"\";\necho \"Pencarian: \" . htmlspecialchars($q);\n?>"
+      ]
+    ],
+    "errors": [
+      "Lupa atribut name.",
+      "Membaca $_POST padahal form menggunakan GET.",
+      "Tidak memberi nilai default ketika input belum dikirim.",
+      "Menampilkan input pengguna mentah tanpa escaping.",
+      "Menganggap validasi hanya dilakukan di HTML tanpa validasi server."
+    ],
+    "task": "Buat form data siswa berisi NIS, nama, kelas, dan jurusan. Tampilkan kembali setelah dikirim.",
+    "challenge": "Tambahkan validasi semua field wajib diisi dan tampilkan pesan error yang jelas.",
+    "reflection": "Mengapa name pada input sangat penting bagi PHP?",
+    "practice": "Simulator dapat mensimulasikan $_POST/$_GET sederhana. Untuk form asli, gunakan XAMPP.",
+    "xampp": "Simpan form sebagai form.php lalu buka melalui http://localhost/belajar_php/form.php."
+  },
+  {
+    "title": "Include dan Struktur Project",
+    "level": "Menengah",
+    "goal": "Menyusun project PHP agar rapi dengan include/require, header, footer, koneksi, dan pemisahan file.",
+    "keywords": [
+      "include",
+      "require",
+      "struktur",
+      "header",
+      "footer",
+      "config"
+    ],
+    "explain": "Project yang semakin besar sebaiknya tidak menumpuk semua kode dalam satu file. include dan require memungkinkan file lain digunakan kembali. Dengan struktur yang baik, header, footer, koneksi database, helper, dan halaman dapat dipisahkan sehingga pemeliharaan lebih mudah.",
+    "analogy": "Seperti buku yang memiliki bab berbeda. Kita tidak menulis seluruh isi buku pada satu halaman. Setiap bagian memiliki tempat sendiri tetapi tetap menjadi satu buku.",
+    "points": [
+      "include memasukkan file lain.",
+      "require juga memasukkan file dan biasanya dipakai untuk file yang wajib tersedia.",
+      "File koneksi sebaiknya dipisahkan.",
+      "Header dan footer dapat digunakan kembali.",
+      "Nama folder dan file harus konsisten.",
+      "Struktur yang rapi membantu debugging dan kerja kelompok."
+    ],
+    "subtopics": [
+      "include",
+      "require",
+      "Header",
+      "Footer",
+      "Config",
+      "Koneksi",
+      "Struktur folder",
+      "Modularisasi project"
+    ],
+    "guided": "Buat header.php dan footer.php, kemudian gunakan include pada index.php.",
+    "examples": [
+      [
+        "header.php",
+        "<header>\n    <h1>Data Siswa RPL</h1>\n</header>"
+      ],
+      [
+        "index.php",
+        "<?php\ninclude \"header.php\";\n?>\n<main>\n    <p>Halaman utama.</p>\n</main>\n<?php\ninclude \"footer.php\";\n?>"
+      ],
+      [
+        "Struktur project",
+        "belajar_php/\n├── index.php\n├── siswa.php\n├── tambah.php\n├── header.php\n├── footer.php\n├── koneksi.php\n└── style.css"
+      ],
+      [
+        "require koneksi",
+        "<?php\nrequire \"koneksi.php\";\necho \"Koneksi siap digunakan\";\n?>"
+      ]
+    ],
+    "errors": [
+      "Nama file salah.",
+      "Path file salah.",
+      "Menggunakan require untuk file yang belum dibuat.",
+      "Menaruh password database di banyak file.",
+      "Struktur folder berubah tetapi include tidak diperbarui."
+    ],
+    "task": "Buat project kecil dengan header.php, footer.php, index.php, dan style.css.",
+    "challenge": "Tambahkan halaman profil.php dan siswa.php yang menggunakan header dan footer yang sama.",
+    "reflection": "Mengapa pemisahan file dapat membuat project lebih mudah dirawat?",
+    "practice": "Simulator hanya membantu memahami konsep. Include/require nyata sebaiknya dijalankan dengan PHP server.",
+    "xampp": "Gunakan C:\\xampp\\htdocs\\belajar_php\\ dan pastikan semua file berada pada struktur yang sesuai."
+  },
+  {
+    "title": "PHP + MySQL/MariaDB dengan XAMPP",
+    "level": "Menengah",
+    "goal": "Memahami database, tabel, koneksi PHP, prepared statement, SELECT, INSERT, dan dasar keamanan database.",
+    "keywords": [
+      "mysql",
+      "mariadb",
+      "mysqli",
+      "pdo",
+      "database",
+      "prepared statement"
+    ],
+    "explain": "Database menyimpan data secara terstruktur sehingga data tetap tersedia setelah halaman ditutup. PHP dapat terhubung ke MySQL/MariaDB menggunakan mysqli atau PDO. Untuk input pengguna, prepared statement lebih aman daripada menyusun SQL dengan menggabungkan string secara langsung.",
+    "analogy": "Database seperti buku induk sekolah. Tabel adalah lembar dengan kolom, setiap baris adalah satu data siswa, dan query adalah perintah kepada petugas untuk mengambil atau mengubah data.",
+    "points": [
+      "Database berisi tabel.",
+      "Tabel memiliki kolom dan baris.",
+      "Primary key dapat menjadi identitas unik.",
+      "mysqli dan PDO dapat digunakan untuk koneksi.",
+      "Prepared statement membantu mencegah SQL injection.",
+      "Koneksi database harus diperiksa dan ditangani dengan baik."
+    ],
+    "subtopics": [
+      "Database",
+      "Table",
+      "Column",
+      "Row",
+      "Primary key",
+      "mysqli",
+      "PDO",
+      "Prepared statement",
+      "SQL injection"
+    ],
+    "guided": "Buat database sekolah, tabel siswa, koneksi.php, lalu uji koneksi sebelum menulis CRUD.",
+    "examples": [
+      [
+        "Membuat database dan tabel",
+        "CREATE DATABASE sekolah;\n\nUSE sekolah;\n\nCREATE TABLE siswa (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    nis VARCHAR(20) NOT NULL,\n    nama VARCHAR(100) NOT NULL,\n    kelas VARCHAR(20) NOT NULL,\n    jurusan VARCHAR(50) NOT NULL\n);"
+      ],
+      [
+        "Koneksi mysqli",
+        "<?php\n$koneksi = mysqli_connect(\"localhost\", \"root\", \"\", \"sekolah\");\n\nif (!$koneksi) {\n    die(\"Koneksi gagal: \" . mysqli_connect_error());\n}\n\necho \"Koneksi berhasil\";\n?>"
+      ],
+      [
+        "Prepared statement INSERT",
+        "<?php\n$stmt = mysqli_prepare(\n    $koneksi,\n    \"INSERT INTO siswa (nis,nama,kelas,jurusan) VALUES (?,?,?,?)\"\n);\n\nmysqli_stmt_bind_param($stmt, \"ssss\", $nis, $nama, $kelas, $jurusan);\nmysqli_stmt_execute($stmt);\n?>"
+      ]
+    ],
+    "errors": [
+      "MySQL belum aktif.",
+      "Nama database salah.",
+      "Nama tabel/kolom tidak sesuai.",
+      "Query dibangun dengan menggabungkan input pengguna langsung.",
+      "Koneksi database tidak diperiksa.",
+      "Password dan konfigurasi dibagikan sembarangan."
+    ],
+    "task": "Buat database sekolah dan tabel siswa melalui phpMyAdmin. Uji koneksi PHP.",
+    "challenge": "Buat form tambah siswa yang menggunakan prepared statement.",
+    "reflection": "Mengapa database lebih cocok daripada array ketika data harus disimpan secara permanen?",
+    "practice": "Kode mysqli tidak dijalankan oleh simulator browser. Ikuti Laboratorium XAMPP.",
+    "xampp": "Start Apache + MySQL → buka phpMyAdmin → buat database sekolah → buat tabel siswa → buat koneksi.php → uji melalui localhost."
+  },
+  {
+    "title": "CRUD - Create dan Read",
+    "level": "Menengah",
+    "goal": "Membangun proses Create dan Read untuk menambah serta menampilkan data dari database.",
+    "keywords": [
+      "crud",
+      "create",
+      "read",
+      "insert",
+      "select"
+    ],
+    "explain": "CRUD adalah singkatan Create, Read, Update, Delete. Create menambahkan data, sedangkan Read mengambil dan menampilkan data. Dua operasi ini merupakan fondasi aplikasi data siswa.",
+    "analogy": "Pada buku data siswa, Create seperti menambahkan siswa baru ke buku, sedangkan Read seperti membuka buku dan membaca daftar siswa.",
+    "points": [
+      "Create biasanya menggunakan INSERT.",
+      "Read biasanya menggunakan SELECT.",
+      "Form digunakan untuk menerima data.",
+      "Prepared statement digunakan untuk input database.",
+      "Hasil SELECT dapat dibaca dengan mysqli_fetch_assoc().",
+      "Data yang ditampilkan ke HTML sebaiknya di-escape."
+    ],
+    "subtopics": [
+      "Create",
+      "Read",
+      "INSERT",
+      "SELECT",
+      "Form tambah",
+      "fetch_assoc",
+      "Output HTML"
+    ],
+    "guided": "Pastikan koneksi berhasil. Buat form tambah, proses INSERT, kemudian halaman daftar siswa dengan SELECT.",
+    "examples": [
+      [
+        "Create dengan prepared statement",
+        "<?php\n$stmt = mysqli_prepare($koneksi,\n    \"INSERT INTO siswa (nis,nama,kelas,jurusan) VALUES (?,?,?,?)\"\n);\nmysqli_stmt_bind_param($stmt, \"ssss\", $nis, $nama, $kelas, $jurusan);\nmysqli_stmt_execute($stmt);\n?>"
+      ],
+      [
+        "Read",
+        "<?php\n$result = mysqli_query($koneksi, \"SELECT id, nis, nama, kelas, jurusan FROM siswa\");\n\nwhile ($row = mysqli_fetch_assoc($result)) {\n    echo htmlspecialchars($row[\"nama\"]) . \"<br>\";\n}\n?>"
+      ],
+      [
+        "Read menjadi tabel HTML",
+        "<?php\n$result = mysqli_query($koneksi, \"SELECT * FROM siswa ORDER BY id DESC\");\nwhile ($row = mysqli_fetch_assoc($result)) {\n    echo \"<tr>\";\n    echo \"<td>\" . htmlspecialchars($row[\"nis\"]) . \"</td>\";\n    echo \"<td>\" . htmlspecialchars($row[\"nama\"]) . \"</td>\";\n    echo \"</tr>\";\n}\n?>"
+      ]
+    ],
+    "errors": [
+      "INSERT berhasil tetapi tidak ada pesan konfirmasi.",
+      "SELECT salah nama tabel/kolom.",
+      "Tidak melakukan escaping saat menampilkan data.",
+      "Tidak menangani query yang gagal.",
+      "Form tidak memiliki name yang sesuai dengan PHP."
+    ],
+    "task": "Buat halaman tambah siswa dan halaman daftar siswa.",
+    "challenge": "Tambahkan jumlah data siswa dan pencarian berdasarkan nama.",
+    "reflection": "Apa hubungan antara form, INSERT, database, SELECT, dan tabel HTML?",
+    "practice": "CRUD Create/Read nyata harus dijalankan melalui XAMPP.",
+    "xampp": "Pastikan database sekolah dan tabel siswa tersedia sebelum menjalankan contoh."
+  },
+  {
+    "title": "CRUD - Update dan Delete",
+    "level": "Menengah",
+    "goal": "Memahami proses mengubah dan menghapus data dengan aman menggunakan id dan prepared statement.",
+    "keywords": [
+      "update",
+      "delete",
+      "crud",
+      "where",
+      "prepared statement"
+    ],
+    "explain": "Update digunakan untuk mengubah data yang sudah ada, sedangkan Delete digunakan untuk menghapus data. Kedua operasi harus memiliki target yang jelas, biasanya menggunakan WHERE id = ?. Tanpa WHERE yang benar, terlalu banyak baris dapat berubah atau terhapus.",
+    "analogy": "Jika guru ingin mengubah data satu siswa, guru membutuhkan identitas siswa yang tepat. Jika tidak ada identitas, bisa salah mengubah data siswa lain. WHERE bekerja seperti penunjuk data yang harus dituju.",
+    "points": [
+      "UPDATE mengubah data.",
+      "DELETE menghapus data.",
+      "WHERE membatasi target.",
+      "Gunakan id sebagai identitas unik.",
+      "Gunakan prepared statement untuk parameter.",
+      "Berikan konfirmasi sebelum delete pada antarmuka."
+    ],
+    "subtopics": [
+      "UPDATE",
+      "DELETE",
+      "WHERE",
+      "id",
+      "Edit form",
+      "Konfirmasi hapus",
+      "Prepared statement"
+    ],
+    "guided": "Mulai dari halaman daftar siswa. Tambahkan link edit dengan id, form edit, proses UPDATE, lalu tombol hapus.",
+    "examples": [
+      [
+        "Update",
+        "<?php\n$stmt = mysqli_prepare(\n    $koneksi,\n    \"UPDATE siswa SET nama=?, kelas=? WHERE id=?\"\n);\nmysqli_stmt_bind_param($stmt, \"ssi\", $nama, $kelas, $id);\nmysqli_stmt_execute($stmt);\n?>"
+      ],
+      [
+        "Delete",
+        "<?php\n$stmt = mysqli_prepare($koneksi,\n    \"DELETE FROM siswa WHERE id=?\"\n);\nmysqli_stmt_bind_param($stmt, \"i\", $id);\nmysqli_stmt_execute($stmt);\n?>"
+      ],
+      [
+        "Mengambil id dari URL",
+        "<?php\n$id = filter_input(INPUT_GET, \"id\", FILTER_VALIDATE_INT);\nif (!$id) {\n    die(\"ID tidak valid.\");\n}\necho \"ID siswa: \" . $id;\n?>"
+      ]
+    ],
+    "errors": [
+      "UPDATE tanpa WHERE.",
+      "DELETE tanpa WHERE.",
+      "Menerima id tanpa validasi.",
+      "Menggunakan id dari URL tanpa pemeriksaan.",
+      "Tidak memberi konfirmasi sebelum penghapusan."
+    ],
+    "task": "Tambahkan fitur edit dan hapus pada aplikasi data siswa.",
+    "challenge": "Tambahkan halaman detail siswa berdasarkan id dan konfirmasi sebelum delete.",
+    "reflection": "Mengapa WHERE sangat penting pada UPDATE dan DELETE?",
+    "practice": "Gunakan XAMPP untuk menguji operasi database secara nyata.",
+    "xampp": "Lakukan backup database sebelum eksperimen delete massal."
+  },
+  {
+    "title": "Validasi, Keamanan Dasar, dan Debugging",
+    "level": "Lanjutan",
+    "goal": "Menerapkan validasi input, escaping output, prepared statement, validasi id, debugging, dan penanganan error dasar.",
+    "keywords": [
+      "validasi",
+      "security",
+      "debugging",
+      "sql injection",
+      "xss"
+    ],
+    "explain": "Program yang berjalan belum tentu aman. Validasi memastikan data memenuhi aturan, escaping membantu mencegah input pengguna ditafsirkan sebagai HTML, prepared statement membantu melindungi query SQL dari SQL injection, dan debugging membantu menemukan sumber masalah secara sistematis.",
+    "analogy": "Seperti petugas sekolah memeriksa formulir sebelum masuk arsip. Data dicek kelengkapan dan formatnya, lalu disimpan dengan cara yang aman.",
+    "points": [
+      "Validasi input di server tetap diperlukan meskipun HTML memiliki required.",
+      "Escape output menggunakan htmlspecialchars() ketika menampilkan input yang tidak dipercaya.",
+      "Gunakan prepared statement untuk query dengan parameter.",
+      "Validasi id sebagai integer jika digunakan untuk memilih data.",
+      "Jangan menampilkan password atau informasi sensitif dalam pesan error.",
+      "Debugging dilakukan dengan membaca error, memeriksa nilai, dan menguji bagian kecil."
+    ],
+    "subtopics": [
+      "Validasi",
+      "Sanitasi vs escaping",
+      "XSS",
+      "SQL injection",
+      "Prepared statement",
+      "Validasi ID",
+      "Debugging",
+      "Error handling"
+    ],
+    "guided": "Cari bug dari program kecil. Periksa input, query, dan output secara terpisah.",
+    "examples": [
+      [
+        "Validasi input",
+        "<?php\n$nama = trim($_POST[\"nama\"] ?? \"\");\nif ($nama === \"\") {\n    die(\"Nama wajib diisi.\");\n}\n?>"
+      ],
+      [
+        "Escape output",
+        "<?php\n$nama = $_POST[\"nama\"] ?? \"\";\necho htmlspecialchars($nama, ENT_QUOTES, \"UTF-8\");\n?>"
+      ],
+      [
+        "Validasi id",
+        "<?php\n$id = filter_input(INPUT_GET, \"id\", FILTER_VALIDATE_INT);\nif ($id === false || $id === null) {\n    die(\"ID tidak valid.\");\n}\necho $id;\n?>"
+      ],
+      [
+        "Debugging sederhana",
+        "<?php\n$nilai = 85;\nvar_dump($nilai);\n// Periksa tipe dan nilai sebelum melanjutkan proses.\n?>"
+      ]
+    ],
+    "errors": [
+      "Menganggap required pada HTML sudah cukup.",
+      "Menggabungkan input pengguna langsung ke SQL.",
+      "Menampilkan input pengguna mentah sebagai HTML.",
+      "Memperbaiki banyak bagian sekaligus tanpa mengetahui sumber error.",
+      "Mengabaikan pesan error."
+    ],
+    "task": "Tambahkan validasi NIS, nama, kelas, dan jurusan pada form siswa.",
+    "challenge": "Perbaiki CRUD agar menggunakan prepared statement, escaping output, dan validasi id.",
+    "reflection": "Apa perbedaan validasi input dan escaping output?",
+    "practice": "Uji input kosong, karakter khusus, dan id yang tidak valid menggunakan XAMPP.",
+    "xampp": "Saat debugging lokal, tampilkan error PHP secara aman pada lingkungan pengembangan, tetapi jangan menampilkan detail sensitif pada aplikasi produksi."
+  },
+  {
+    "title": "Proyek Akhir - Aplikasi Data Siswa RPL",
+    "level": "Proyek",
+    "goal": "Mengintegrasikan HTML, CSS, PHP, form, database, CRUD, validasi, keamanan dasar, dan dokumentasi menjadi satu aplikasi.",
+    "keywords": [
+      "project",
+      "crud",
+      "database",
+      "php",
+      "rpl",
+      "portfolio"
+    ],
+    "explain": "Proyek akhir menjadi bukti bahwa siswa mampu menggabungkan materi yang sudah dipelajari. Produk yang dibuat adalah aplikasi Data Siswa RPL dengan fitur tambah, tampil, edit, hapus, pencarian, validasi, dan tampilan yang mudah digunakan.",
+    "analogy": "Seperti membangun rumah dari beberapa keterampilan: HTML/CSS menjadi tampilan, PHP menjadi logika, database menjadi tempat penyimpanan, validasi menjadi pemeriksaan kualitas, dan CRUD menjadi fitur utama pengelolaan data.",
+    "points": [
+      "Aplikasi memiliki database dan tabel siswa.",
+      "Koneksi database dipisahkan ke koneksi.php.",
+      "Create, Read, Update, Delete berjalan.",
+      "Form divalidasi.",
+      "Query berparameter menggunakan prepared statement.",
+      "Output pengguna di-escape.",
+      "Antarmuka mudah digunakan.",
+      "Project memiliki README/dokumentasi.",
+      "Siswa mampu menjelaskan kode saat presentasi."
+    ],
+    "subtopics": [
+      "Analisis kebutuhan",
+      "Database",
+      "UI",
+      "Form",
+      "CRUD",
+      "Validasi",
+      "Keamanan",
+      "Testing",
+      "Dokumentasi",
+      "Presentasi"
+    ],
+    "guided": "Kerjakan proyek secara bertahap. Selesaikan koneksi terlebih dahulu, lalu Create, Read, Update, Delete, validasi, pencarian, testing, dan dokumentasi.",
+    "examples": [
+      [
+        "Struktur project",
+        "data_siswa/\n├── index.php\n├── koneksi.php\n├── tambah.php\n├── proses_tambah.php\n├── edit.php\n├── proses_edit.php\n├── hapus.php\n├── style.css\n└── README.txt"
+      ],
+      [
+        "Alur aplikasi",
+        "Form tambah\n    ↓\nValidasi PHP\n    ↓\nPrepared Statement\n    ↓\nMySQL/MariaDB\n    ↓\nSELECT\n    ↓\nTabel Data Siswa"
+      ],
+      [
+        "Checklist fitur",
+        "☐ Database dibuat\n☐ Koneksi berhasil\n☐ Create berjalan\n☐ Read berjalan\n☐ Update berjalan\n☐ Delete berjalan\n☐ Validasi berjalan\n☐ Pencarian berjalan\n☐ Output di-escape\n☐ Dokumentasi selesai"
+      ]
+    ],
+    "errors": [
+      "Mengerjakan semua fitur sekaligus.",
+      "Tidak membuat rancangan database terlebih dahulu.",
+      "Tidak menguji setiap fitur setelah selesai.",
+      "Tidak memahami kode yang hanya disalin.",
+      "Tidak membuat dokumentasi."
+    ],
+    "task": "Bangun aplikasi Data Siswa RPL sesuai struktur project dan fitur minimal.",
+    "challenge": "Tambahkan pencarian nama/NIS, filter kelas, jumlah data, halaman detail, dan desain responsive.",
+    "reflection": "Bagian mana yang paling sulit dan bagaimana cara Anda memecah masalahnya menjadi langkah kecil?",
+    "practice": "Gunakan XAMPP sebagai lingkungan server. Dokumentasikan screenshot hasil setiap fitur.",
+    "xampp": "Presentasikan aplikasi dari http://localhost/data_siswa/ dan tunjukkan database serta alur CRUD."
+  }
 ];
 
 const quizData=[
-["PHP terutama berjalan di sisi...",["Server","Keyboard","Monitor","Printer"],0],
-["Variabel PHP diawali dengan...",["#","$","@","%"],1],
-["Perintah untuk menampilkan teks adalah...",["echo","loop","table","connect"],0],
-["Array indexed biasanya dimulai dari index...",["1","-1","0","10"],2],
-["Perulangan untuk array adalah...",["foreach","if","echo","include"],0],
-["Data form POST dibaca dengan...",["$_GET","$_POST","$_FORM","$_INPUT"],1],
-["Database yang umum digunakan bersama PHP dalam platform ini adalah...",["MySQL/MariaDB","PNG","CSS","HTML"],0],
-["CRUD berarti...",["Create Read Update Delete","Copy Run Upload Download","Code Run User Data","Create Reset Use Design"],0],
-["SQL untuk mengambil data adalah...",["INSERT","SELECT","DELETE","UPDATE"],1],
-["SQL untuk menambah data adalah...",["SELECT","INSERT","UPDATE","DROP"],1],
-["Salah satu tujuan htmlspecialchars() adalah...",["Mengatur warna","Escape output HTML","Menyalakan Apache","Membuat database"],1],
-["WHERE pada UPDATE/DELETE penting untuk...",["Memberi warna","Menentukan data yang ditargetkan","Membuat CSS","Menjalankan browser"],1]
+  [
+    "PHP terutama diproses di sisi...",
+    [
+      "Server",
+      "Keyboard",
+      "Monitor",
+      "Printer"
+    ],
+    0,
+    "PHP diproses di server sebelum hasilnya dikirim ke browser."
+  ],
+  [
+    "Variabel PHP diawali dengan...",
+    [
+      "#",
+      "$",
+      "@",
+      "%"
+    ],
+    1,
+    "Nama variabel PHP diawali simbol dolar ($)."
+  ],
+  [
+    "Perintah yang umum digunakan untuk menampilkan teks adalah...",
+    [
+      "echo",
+      "loop",
+      "table",
+      "connect"
+    ],
+    0,
+    "echo digunakan untuk menampilkan nilai atau teks."
+  ],
+  [
+    "Statement PHP umumnya diakhiri dengan...",
+    [
+      ":",
+      ";",
+      "?",
+      "!"
+    ],
+    1,
+    "Titik koma menandai akhir statement PHP pada sintaks umum."
+  ],
+  [
+    "Komentar satu baris dapat dibuat dengan...",
+    [
+      "//",
+      "<>",
+      "{}",
+      "[]"
+    ],
+    0,
+    "// digunakan untuk komentar satu baris. Tanda # juga dapat digunakan."
+  ],
+  [
+    "Operator untuk menggabungkan string adalah...",
+    [
+      ".",
+      "+",
+      "&",
+      "::"
+    ],
+    0,
+    "Titik (.) digunakan untuk concatenation atau penggabungan string."
+  ],
+  [
+    "Tipe data untuk bilangan bulat adalah...",
+    [
+      "string",
+      "integer",
+      "boolean",
+      "array"
+    ],
+    1,
+    "Integer menyimpan bilangan bulat seperti 10, 25, atau -3."
+  ],
+  [
+    "Operator === membandingkan...",
+    [
+      "Warna dan ukuran",
+      "Nilai saja",
+      "Nilai dan tipe data",
+      "Nama file"
+    ],
+    2,
+    "=== adalah perbandingan identik: nilai dan tipe data harus sama."
+  ],
+  [
+    "Perintah yang tepat untuk keputusan bersyarat adalah...",
+    [
+      "if",
+      "echo",
+      "include",
+      "array"
+    ],
+    0,
+    "if digunakan untuk memeriksa kondisi."
+  ],
+  [
+    "Perulangan yang sangat cocok untuk membaca setiap elemen array adalah...",
+    [
+      "foreach",
+      "if",
+      "echo",
+      "switch",
+      ""
+    ],
+    0,
+    "foreach mengambil elemen array satu per satu."
+  ],
+  [
+    "Index pertama indexed array PHP umumnya adalah...",
+    [
+      "0",
+      "1",
+      "-1",
+      "10"
+    ],
+    0,
+    "Indexed array PHP umumnya dimulai dari index 0."
+  ],
+  [
+    "Function digunakan terutama untuk...",
+    [
+      "Menghapus browser",
+      "Mengelompokkan kode yang dapat digunakan kembali",
+      "Menyalakan MySQL",
+      "Mengubah warna monitor"
+    ],
+    1,
+    "Function membantu membuat kode modular dan dapat dipanggil kembali."
+  ],
+  [
+    "Data form dengan method POST dibaca melalui...",
+    [
+      "$_GET",
+      "$_POST",
+      "$_FORM",
+      "$_INPUT"
+    ],
+    1,
+    "Superglobal $_POST berisi data yang dikirim dengan method POST."
+  ],
+  [
+    "Atribut input HTML yang menjadi nama data untuk PHP adalah...",
+    [
+      "class",
+      "name",
+      "color",
+      "size"
+    ],
+    1,
+    "PHP membaca field berdasarkan nama yang dikirim, sehingga atribut name penting."
+  ],
+  [
+    "Fungsi htmlspecialchars() digunakan untuk...",
+    [
+      "Membuat database",
+      "Escape karakter HTML saat output",
+      "Menyalakan Apache",
+      "Membuat loop"
+    ],
+    1,
+    "htmlspecialchars membantu mencegah input ditafsirkan sebagai HTML saat ditampilkan."
+  ],
+  [
+    "SQL untuk mengambil data adalah...",
+    [
+      "INSERT",
+      "SELECT",
+      "DELETE",
+      "UPDATE"
+    ],
+    1,
+    "SELECT digunakan untuk mengambil data dari tabel."
+  ],
+  [
+    "SQL untuk menambahkan data adalah...",
+    [
+      "SELECT",
+      "INSERT",
+      "UPDATE",
+      "DROP"
+    ],
+    1,
+    "INSERT menambahkan baris baru ke tabel."
+  ],
+  [
+    "SQL untuk mengubah data adalah...",
+    [
+      "UPDATE",
+      "SELECT",
+      "INSERT",
+      "CREATE"
+    ],
+    0,
+    "UPDATE mengubah data yang sudah ada."
+  ],
+  [
+    "SQL untuk menghapus data adalah...",
+    [
+      "READ",
+      "DELETE",
+      "SELECT",
+      "ALTER"
+    ],
+    1,
+    "DELETE menghapus baris yang menjadi target query."
+  ],
+  [
+    "Klausa WHERE pada UPDATE atau DELETE digunakan untuk...",
+    [
+      "Mengubah warna",
+      "Menentukan data yang menjadi target",
+      "Membuat CSS",
+      "Membuka browser"
+    ],
+    1,
+    "WHERE membatasi baris yang terkena operasi."
+  ],
+  [
+    "Prepared statement membantu melindungi aplikasi dari...",
+    [
+      "SQL injection",
+      "Monitor rusak",
+      "Kabel putus",
+      "File CSS kosong"
+    ],
+    0,
+    "Prepared statement memisahkan query dan parameter sehingga membantu mencegah SQL injection."
+  ],
+  [
+    "Apache pada XAMPP berfungsi sebagai...",
+    [
+      "Web server",
+      "Editor gambar",
+      "Database",
+      "Compiler CSS"
+    ],
+    0,
+    "Apache melayani request web dan menjadi lingkungan untuk menjalankan PHP melalui localhost."
+  ],
+  [
+    "Database yang umum dipakai bersama PHP dalam platform ini adalah...",
+    [
+      "MySQL/MariaDB",
+      "PNG",
+      "CSS",
+      "HTML"
+    ],
+    0,
+    "MySQL/MariaDB digunakan sebagai sistem manajemen database."
+  ],
+  [
+    "CRUD merupakan singkatan dari...",
+    [
+      "Create Read Update Delete",
+      "Copy Run Upload Download",
+      "Code Read Use Design",
+      "Create Reset Update Data"
+    ],
+    0,
+    "CRUD berarti Create, Read, Update, Delete."
+  ],
+  [
+    "Mengapa DELETE sebaiknya memakai WHERE yang tepat?",
+    [
+      "Agar semua data terhapus",
+      "Agar target penghapusan jelas",
+      "Agar CSS aktif",
+      "Agar PHP berubah menjadi HTML"
+    ],
+    1,
+    "Tanpa WHERE yang tepat, query DELETE dapat menghapus terlalu banyak data."
+  ]
 ];
+
 let done=JSON.parse(localStorage.getItem("phpHubDone")||"[]");
 let savedCodes=JSON.parse(localStorage.getItem("phpHubCodes")||"{}");
 let answers={};
@@ -561,20 +1503,24 @@ function progress(){let p=Math.round(done.length/lessons.length*100);document.ge
 function nav(){document.getElementById("nav").innerHTML=lessons.map((x,i)=>`<button onclick="lesson(${i})"><span class="n">${i+1}</span>${x.title}${done.includes(i)?" ✓":""}</button>`).join("");progress()}
 function home(){
  document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas X RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
- <div class="callout green"><b>🆕 Fitur penjelasan baris demi baris:</b> Setiap contoh program sekarang memiliki bagian "Penjelasan setiap baris". Siswa dapat melihat nomor baris, kode, dan arti/fungsi baris tersebut satu per satu.</div><div class="grid"><div class="mini"><h4>📚 Materi lengkap</h4><p>${lessons.length} materi berurutan dari PHP dasar sampai proyek CRUD.</p></div><div class="mini"><h4>💻 Kolom mencoba</h4><p>Setiap materi mempunyai editor untuk mencoba contoh PHP dasar secara simulasi.</p></div><div class="mini"><h4>📝 Evaluasi</h4><p>Kuis mandiri dan proyek akhir Data Siswa RPL.</p></div></div>
- <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> platform memiliki dua mode. <b>Simulator PHP Dasar</b> berjalan langsung di browser, sedangkan <b>PHP + MySQL/fitur server</b> diarahkan ke Laboratorium XAMPP agar siswa menjalankan PHP asli tanpa simulasi palsu.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button></div>`;
+ <div class="callout green"><b>📘 Modul lengkap:</b> Setiap materi memiliki tujuan pembelajaran, peta submateri, penjelasan konsep, analogi sehari-hari, contoh program, penjelasan setiap baris, kesalahan umum, latihan terarah, tantangan, refleksi, praktik simulator, dan panduan XAMPP.</div><div class="grid"><div class="mini"><h4>📚 Modul lengkap</h4><p>${lessons.length} bab dengan tujuan, submateri, contoh, pembahasan baris, latihan, tantangan, refleksi, dan praktik.</p></div><div class="mini"><h4>💻 Kolom mencoba</h4><p>Setiap materi mempunyai editor untuk mencoba contoh PHP dasar secara simulasi.</p></div><div class="mini"><h4>📝 Evaluasi</h4><p>Kuis mandiri dan proyek akhir Data Siswa RPL.</p></div></div>
+ <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> platform memiliki dua mode. <b>Simulator PHP Dasar</b> berjalan langsung di browser, sedangkan <b>PHP + MySQL/fitur server</b> diarahkan ke Laboratorium XAMPP agar siswa menjalankan PHP asli tanpa simulasi palsu.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button> <button class="btn" onclick="moduleView()">📘 Buka Modul Cetak</button></div>`;
 }
 function lesson(i){
  const x=lessons[i], saved=savedCodes[i]||x.examples[0][1];
  document.getElementById("content").innerHTML=`<div class="card"><div class="lesson-head"><div><div class="muted">Materi ${i+1} • ${x.level}</div><h2>${x.title}</h2><p class="muted">${x.goal}</p><div class="tags">${x.keywords.map(k=>`<span class="tag">${k}</span>`).join("")}</div></div><button class="btn ${done.includes(i)?"green":""}" onclick="toggleDone(${i})">${done.includes(i)?"✓ Selesai":"Tandai Selesai"}</button></div>
  <hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><div class="lesson">
+ <div class="callout blue"><b>🎯 Tujuan pembelajaran</b><br>${x.goal}<br><br><b>Prasyarat/arah belajar:</b> ${x.guided}</div>
  <h3>📖 Pengertian dan penjelasan</h3><p>${x.explain}</p>
  <div class="callout"><b>💡 Perumpamaan sehari-hari:</b> ${x.analogy}</div>
+ <h3>🧭 Peta submateri</h3><div class="tags">${x.subtopics.map(s=>`<span class="tag">${s}</span>`).join("")}</div>
  <h3>🎯 Hal yang harus dipahami</h3><ul>${x.points.map(p=>`<li>${p}</li>`).join("")}</ul>
- <h3>💻 Contoh program</h3>${x.examples.map(e=>`<h4>${e[0]}</h4>${block(e[1])}<details class="explain-details" open><summary>📌 Penjelasan setiap baris</summary>${explainCode(e[1])}</details>`).join("")}
+ <h3>💻 Contoh program dan pembahasan</h3>${x.examples.map(e=>`<h4>${e[0]}</h4>${block(e[1])}<details class="explain-details" open><summary>📌 Penjelasan setiap baris</summary>${explainCode(e[1])}</details>`).join("")}
  <h3>⚠️ Kesalahan yang sering terjadi</h3><ul>${x.errors.map(e=>`<li>${e}</li>`).join("")}</ul>
- <h3>🧪 Tugas belajar mandiri</h3><div class="callout green">${x.task}</div>
+ <h3>🧪 Latihan terarah</h3><div class="callout green">${x.task}</div>
  <h3>🔥 Tantangan</h3><div class="callout orange">${x.challenge}</div>
+ <h3>🪞 Refleksi</h3><div class="callout blue">${x.reflection}</div>
+ <h3>🖥️ Praktik</h3><p>${x.practice}</p><div class="callout orange"><b>Laboratorium XAMPP:</b> ${x.xampp}</div>
  </div>
  ${playground(i,saved)}
  <div class="lesson-nav"><button class="btn" onclick="lesson(${i-1})" ${i===0?"disabled":""}>← Sebelumnya</button><button class="btn primary" onclick="lesson(${i+1})" ${i===lessons.length-1?"disabled":""}>Berikutnya →</button></div>
@@ -874,11 +1820,76 @@ function roadmap(){
  document.getElementById("content").innerHTML=`<div class="card"><h2>🗺️ Roadmap Belajar</h2><p class="muted">Belajar berurutan agar konsep tidak meloncat.</p><div class="grid">${lessons.map((x,i)=>`<div class="mini"><b>${i+1}. ${x.title}</b><p>${x.goal}</p><button class="btn" onclick="lesson(${i})">Pelajari</button></div>`).join("")}</div></div>`;
 }
 function quiz(){
- answers={};let h=`<div class="card"><h2>📝 Kuis Mandiri</h2><p class="muted">Pilih jawaban. Nilai dapat digunakan siswa untuk mengetahui materi yang perlu diulang.</p>`;
- quizData.forEach((q,i)=>{h+=`<div class="card" style="box-shadow:none;background:#f8fafc"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>`<button class="quiz-option" onclick="ans(${i},${j},this)">${String.fromCharCode(65+j)}. ${o}</button>`).join("")}<div id="qres${i}"></div></div>`});
- h+=`<button class="btn primary" onclick="grade()">Lihat Nilai</button><div id="score" style="margin-top:14px"></div></div>`;document.getElementById("content").innerHTML=h}
-function ans(i,j,b){answers[i]=j;document.querySelectorAll("#qres"+i+"").forEach(x=>x.textContent="Jawaban dipilih.")}
-function grade(){let n=quizData.reduce((a,q,i)=>a+(answers[i]===q[2]?1:0),0);document.getElementById("score").innerHTML=`<div class="callout ${n>=10?"green":"orange"}"><b>Nilai ${Math.round(n/quizData.length*100)}/100</b><br>${n>=10?"Sangat baik. Lanjutkan ke proyek akhir.":"Ulangi materi yang belum dikuasai dan coba lagi."}</div>`}
+ answers={};
+ let h=`<div class="hero"><div><h2>📝 Kuis Mandiri PHP</h2><p>Evaluasi pemahaman materi PHP dari dasar sampai CRUD. Pilihan yang dipilih akan berubah warna biru. Setelah dikirim, sistem menampilkan skor, jawaban Anda, jawaban benar, dan pembahasan.</p></div><div class="hero-badge"><b>${quizData.length} Soal</b><br>Pilihan Ganda</div></div>
+ <div class="card"><div class="callout"><b>📌 Petunjuk pengerjaan</b><ol><li>Pilih satu jawaban pada setiap soal.</li><li>Jawaban yang dipilih akan ditandai <b>biru</b>.</li><li>Anda masih dapat mengganti jawaban sebelum mengirim.</li><li>Gunakan tombol <b>Kirim Jawaban</b> setelah semua soal selesai.</li><li>Setelah dikirim, pilihan dikunci dan pembahasan ditampilkan.</li></ol></div>
+ <div class="quiz-toolbar"><span class="tag">🔵 Biru = dipilih</span><span class="tag" style="background:#f0fdf4;color:#166534">🟢 Hijau = jawaban benar</span><span class="tag" style="background:#fef2f2;color:#991b1b">🔴 Merah = jawaban siswa yang salah</span></div>
+ <div class="quiz-navigator" id="quizNavigator">${quizData.map((q,i)=>`<button type="button" id="qnav${i}" onclick="document.getElementById('qcard${i}').scrollIntoView({behavior:'smooth',block:'start'})">${i+1}</button>`).join("")}</div>`;
+ quizData.forEach((q,i)=>{
+   h+=`<div class="quiz-card" id="qcard${i}"><div><span class="quiz-number">${i+1}</span><b>${esc(q[0])}</b></div>
+   <div style="margin-top:10px">${q[1].map((o,j)=>`<button type="button" class="quiz-option" data-question="${i}" data-choice="${j}" onclick="ans(${i},${j},this)"><span class="choice-letter">${String.fromCharCode(65+j)}</span><span class="choice-text">${esc(o)}</span></button>`).join("")}</div>
+   <div id="qres${i}"></div></div>`;
+ });
+ h+=`<div class="quiz-toolbar"><button class="btn primary" onclick="grade()">📤 Kirim Jawaban</button><button class="btn" onclick="quiz()">↻ Ulangi Kuis</button></div><div id="score"></div></div>`;
+ document.getElementById("content").innerHTML=h;
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function ans(i,j,b){
+ answers[i]=j;
+ document.querySelectorAll('[data-question="'+i+'"]').forEach(btn=>{
+   btn.classList.toggle("selected",Number(btn.dataset.choice)===j);
+ });
+ const card=document.getElementById("qcard"+i);
+ if(card)card.classList.add("answered");
+ const navBtn=document.getElementById("qnav"+i);
+ if(navBtn)navBtn.classList.add("answered");
+ const res=document.getElementById("qres"+i);
+ if(res)res.innerHTML='<div class="quiz-feedback neutral">✓ Jawaban dipilih. Anda masih dapat mengubahnya sebelum mengirim.</div>';
+}
+function grade(){
+ let correct=0,wrong=0,unanswered=0;
+ quizData.forEach((q,i)=>{
+   const selected=answers[i];
+   const isUnanswered=selected===undefined;
+   if(isUnanswered)unanswered++;
+   else if(selected===q[2])correct++;
+   else wrong++;
+   document.querySelectorAll('[data-question="'+i+'"]').forEach(btn=>{
+     const choice=Number(btn.dataset.choice);
+     btn.disabled=true;
+     btn.classList.remove("selected");
+     if(choice===q[2])btn.classList.add("correct");
+     if(!isUnanswered && choice===selected && selected!==q[2])btn.classList.add("wrong");
+   });
+   const navBtn=document.getElementById("qnav"+i);
+   if(navBtn){
+     navBtn.classList.remove("answered");
+     navBtn.classList.add(isUnanswered?"unanswered":selected===q[2]?"nav-correct":"nav-wrong");
+   }
+   const res=document.getElementById("qres"+i);
+   const correctText=String.fromCharCode(65+q[2])+". "+q[1][q[2]];
+   const selectedText=isUnanswered?"Belum dijawab":String.fromCharCode(65+selected)+". "+q[1][selected];
+   const ok=!isUnanswered && selected===q[2];
+   res.innerHTML=`<div class="quiz-feedback ${ok?"ok":isUnanswered?"neutral":"bad"}"><b>${ok?"✅ Benar":isUnanswered?"⚠️ Belum dijawab":"❌ Salah"}</b><br><b>Jawaban Anda:</b> ${esc(selectedText)}<br><b>Jawaban benar:</b> ${esc(correctText)}<br><span>${quizExplanation(i)}</span></div>`;
+ });
+ const score=Math.round(correct/quizData.length*100);
+ const passed=score>=75;
+ const result={score,correct,wrong,unanswered,date:new Date().toLocaleString("id-ID")};
+ localStorage.setItem("phpHubLastQuiz",JSON.stringify(result));
+ document.getElementById("score").innerHTML=`<div class="card" style="border:2px solid ${passed?"#86efac":"#fed7aa"};background:${passed?"#f0fdf4":"#fffaf0"}"><h3 style="margin-top:0">📊 Hasil Evaluasi</h3><div class="quiz-summary"><div class="quiz-stat"><b>${score}</b>Nilai</div><div class="quiz-stat"><b>${correct}</b>Benar</div><div class="quiz-stat"><b>${wrong}</b>Salah</div><div class="quiz-stat"><b>${unanswered}</b>Kosong</div></div><p><b>${passed?"🎉 Selamat!":"📚 Tetap semangat!"}</b> ${passed?"Anda mencapai nilai minimal 75. Pelajari kembali pembahasan untuk memperkuat pemahaman.":"Pelajari kembali materi yang masih salah, kemudian ulangi kuis."}</p><p class="muted">Hasil terakhir tersimpan di browser perangkat ini pada ${result.date}.</p><button class="btn" onclick="quiz()">↻ Kerjakan Ulang</button></div>`;
+ document.getElementById("score").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function quizExplanation(i){
+ return quizData[i]?.[3] || "Periksa kembali materi terkait soal ini.";
+}
+function moduleView(){
+ document.getElementById("content").innerHTML=`<div class="module-cover"><h2>📘 Modul Pembelajaran PHP Kelas X RPL</h2><p>Modul mandiri lengkap dari pengenalan PHP, XAMPP, sintaks, variabel, operator, percabangan, perulangan, array, function, form, struktur project, database, CRUD, keamanan, hingga proyek akhir.</p><p><b>Nama siswa:</b> ____________________________ &nbsp; <b>Kelas:</b> __________ &nbsp; <b>Tanggal:</b> __________</p><div class="callout blue"><b>Petunjuk:</b> baca materi berurutan, pahami contoh, jelaskan setiap baris, kerjakan latihan, praktikkan dengan simulator/XAMPP, lalu selesaikan kuis dan proyek.</div><button class="btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button></div>
+ <div class="card"><h3>🎯 Tujuan umum modul</h3><ul><li>Memahami konsep dasar PHP dan cara kerja web server.</li><li>Mampu membuat program PHP dasar dengan sintaks yang benar.</li><li>Mampu mengolah variabel, kondisi, perulangan, array, function, dan form.</li><li>Mampu menghubungkan PHP dengan MySQL/MariaDB menggunakan XAMPP.</li><li>Mampu membuat CRUD sederhana dengan validasi dan keamanan dasar.</li><li>Mampu menjelaskan kode program yang dibuat, bukan sekadar menyalin.</li></ul></div>
+ <div class="card"><h3>🧭 Alur belajar</h3><div class="tags">${lessons.map((x,i)=>`<span class="tag">${i+1}. ${x.title}</span>`).join("")}</div></div>
+ ${lessons.map((x,i)=>`<section class="module-section"><div class="muted">BAB ${i+1} • ${x.level}</div><h2>${i+1}. ${esc(x.title)}</h2><p><b>Tujuan pembelajaran:</b> ${esc(x.goal)}</p><h3>📖 Pengertian</h3><p>${x.explain}</p><div class="callout"><b>💡 Perumpamaan:</b> ${x.analogy}</div><h3>🧭 Submateri</h3><ul>${x.subtopics.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><h3>🎯 Kompetensi yang harus dipahami</h3><ul>${x.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul><h3>💻 Contoh dan pembahasan baris demi baris</h3>${x.examples.map(e=>`<h4>${esc(e[0])}</h4>${block(e[1])}<details class="explain-details"><summary>📌 Buka penjelasan setiap baris</summary>${explainCode(e[1])}</details>`).join("")}<h3>⚠️ Kesalahan umum</h3><ul>${x.errors.map(e=>`<li>${esc(e)}</li>`).join("")}</ul><h3>📝 Latihan</h3><p>${esc(x.task)}</p><h3>🚀 Tantangan</h3><p>${esc(x.challenge)}</p><h3>🪞 Refleksi</h3><p>${esc(x.reflection)}</p><h3>🖥️ Praktik</h3><p>${esc(x.practice)}</p><div class="callout orange"><b>XAMPP:</b> ${esc(x.xampp)}</div><hr><p><b>Checklist BAB:</b> ☐ Saya memahami konsep ☐ Saya memahami contoh ☐ Saya dapat menjelaskan kode ☐ Saya mengerjakan latihan ☐ Saya melakukan praktik</p></section>`).join("")}
+ <div class="card"><h2>✅ Checklist akhir modul</h2><p>☐ Semua bab dipelajari &nbsp; ☐ Semua latihan dikerjakan &nbsp; ☐ Kuis selesai &nbsp; ☐ Proyek CRUD selesai &nbsp; ☐ Proyek dipresentasikan</p></div>`;
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 function project(){
  document.getElementById("content").innerHTML=`<div class="hero"><div><h2>🚀 Proyek Akhir: Data Siswa RPL</h2><p>Gabungkan HTML, CSS, PHP, MySQL/MariaDB, validasi, dan CRUD menjadi satu aplikasi.</p></div><div class="hero-badge"><b>CRUD</b><br>Project</div></div>
  <div class="card"><h3>Target aplikasi</h3><ul><li>Tambah siswa</li><li>Tampilkan siswa</li><li>Edit siswa</li><li>Hapus siswa</li><li>Pencarian NIS/nama</li><li>Validasi form</li><li>Tampilan responsive</li></ul></div>
@@ -895,7 +1906,7 @@ function project(){
  <div class="card"><h3>Rubrik belajar mandiri</h3><table class="table"><tr><th>Kompetensi</th><th>Target</th></tr><tr><td>PHP dasar</td><td>Variabel, operator, kondisi, loop, array, function</td></tr><tr><td>Form</td><td>Input dan validasi berjalan</td></tr><tr><td>Database</td><td>Koneksi dan tabel berhasil</td></tr><tr><td>CRUD</td><td>Create, Read, Update, Delete berjalan</td></tr><tr><td>Keamanan dasar</td><td>Prepared statement dan escaping digunakan</td></tr><tr><td>UI</td><td>Tampilan rapi dan mudah digunakan</td></tr></table></div>`;
 }
 function filterNav(q){q=q.toLowerCase().trim();let a=lessons.map((x,i)=>({x,i})).filter(z=>(z.x.title+" "+z.x.goal+" "+z.x.keywords.join(" ")).toLowerCase().includes(q));document.getElementById("nav").innerHTML=a.map(z=>`<button onclick="lesson(${z.i})"><span class="n">${z.i+1}</span>${z.x.title}</button>`).join("")||`<div style="padding:10px;color:#94a3b8;font-size:12px">Materi tidak ditemukan.</div>`}
-function resetAll(){if(confirm("Reset progress dan kode tersimpan?")){done=[];savedCodes={};localStorage.removeItem("phpHubDone");localStorage.removeItem("phpHubCodes");nav();home()}}
+function resetAll(){if(confirm("Reset progress dan kode tersimpan?")){done=[];savedCodes={};localStorage.removeItem("phpHubDone");localStorage.removeItem("phpHubCodes");localStorage.removeItem("phpHubLastQuiz");nav();home()}}
 function toggleSide(){document.getElementById("sidebar").classList.toggle("open")}
 nav();home();</script>
 </body>
