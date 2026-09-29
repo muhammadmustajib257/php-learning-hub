@@ -52,6 +52,18 @@ pre{position:relative;background:#0b1220;color:#e2e8f0;padding:18px;border-radiu
 .output.warn{border-color:#fdba74;background:#fff7ed}
 .output.error{border-color:#fca5a5;background:#fef2f2}
 .run-meta{font-size:12px;color:#64748b;margin-top:8px}
+
+/* Interactive PHP input panel */
+.sim-input-panel{display:none;margin:14px 0;padding:16px;border:1px solid #bfdbfe;background:#f8fbff;border-radius:14px}
+.sim-input-panel.active{display:block}
+.sim-input-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+.sim-input-head strong{font-size:14px}.sim-input-head span{font-size:12px;color:#64748b}
+.sim-input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.sim-input-field label{display:block;font-size:12px;font-weight:800;color:#334155;margin-bottom:6px}
+.sim-input-field input{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;outline:none}
+.sim-input-field input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.sim-input-note{margin-top:10px;font-size:12px;color:#64748b;line-height:1.5}
+.output{white-space:pre-wrap;min-height:110px}
 </style>
 </head>
 <body>
@@ -561,19 +573,42 @@ function lesson(i){
  ${playground(i,saved)}
  <div class="lesson-nav"><button class="btn" onclick="lesson(${i-1})" ${i===0?"disabled":""}>← Sebelumnya</button><button class="btn primary" onclick="lesson(${i+1})" ${i===lessons.length-1?"disabled":""}>Berikutnya →</button></div>
  </div>`;
+ refreshSimInputs(i);
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function playground(i,codeText){
  return `<div class="playground">
  <div class="play-head"><h3>🧪 Coba Program Sendiri</h3><div><button class="btn" onclick="loadExample(${i})">Muat Contoh</button> <button class="btn" onclick="saveCode(${i})">Simpan</button> <button class="btn green" onclick="runCode(${i})">▶ Jalankan</button></div></div>
  <div class="simulator-status"><span class="sim-badge">🟢 Simulator PHP Dasar</span><span class="sim-badge info">🌐 Berjalan di browser</span></div>
- <div class="sim-help"><b>Yang bisa dicoba:</b> <code>echo</code>, variabel, string, operasi hitung, <code>if / elseif / else</code>, <code>for</code>, <code>while</code>, <code>foreach</code>, array sederhana, dan fungsi sederhana.<br><b>Catatan:</b> kode <code>mysqli</code>, MySQL/MariaDB, <code>PDO</code>, file <code>include/require</code>, dan fitur server PHP tidak dijalankan oleh simulator ini. Gunakan XAMPP untuk praktik PHP asli.</div>
- <textarea id="editor${i}" class="editor" spellcheck="false">${esc(codeText)}</textarea>
- <div class="out-title">Output</div><div id="output${i}" class="output">Klik "Jalankan" untuk melihat hasil.</div><div id="runmeta${i}" class="run-meta"></div></div>`;
+ <div class="sim-help"><b>Yang bisa dicoba:</b> <code>echo</code>, variabel, string, operasi hitung, <code>if / elseif / else</code>, <code>for</code>, <code>while</code>, <code>foreach</code>, array sederhana, fungsi sederhana, dan <code>$_POST</code>/<code>$_GET</code> sederhana.<br><b>Catatan:</b> panel input di bawah adalah simulasi input form. Kode <code>mysqli</code>, MySQL/MariaDB, <code>PDO</code>, file <code>include/require</code>, session, upload, dan fitur server PHP tetap harus dijalankan melalui XAMPP.</div>
+ <textarea id="editor${i}" class="editor" spellcheck="false" oninput="refreshSimInputs(${i})">${esc(codeText)}</textarea>
+ <div id="siminputs${i}" class="sim-input-panel"></div>
+ <div class="out-title">Output</div><div id="output${i}" class="output">Klik "Jalankan" untuk menjalankan program.</div><div id="runmeta${i}" class="run-meta"></div></div>`;
 }
+function detectInputFields(code){
+ const fields=[]; const re=/\$_(?:POST|GET)\s*\[\s*['"]([^'"]+)['"]\s*\]/g; let m;
+ while((m=re.exec(code))){if(!fields.includes(m[1]))fields.push(m[1]);}
+ return fields;
+}
+function refreshSimInputs(i){
+ const ed=document.getElementById("editor"+i),panel=document.getElementById("siminputs"+i); if(!ed||!panel)return;
+ const fields=detectInputFields(ed.value);
+ if(!fields.length){panel.className="sim-input-panel";panel.innerHTML="";return;}
+ const previous={}; panel.querySelectorAll("input[data-field]").forEach(x=>previous[x.dataset.field]=x.value);
+ panel.className="sim-input-panel active";
+ panel.innerHTML=`<div class="sim-input-head"><strong>⌨️ Input pengguna</strong><span>Simulator form PHP</span></div><div class="sim-input-grid">${fields.map(f=>`<div class="sim-input-field"><label for="sim_${i}_${escAttr(f)}">${esc(f)}</label><input id="sim_${i}_${escAttr(f)}" data-field="${escAttr(f)}" type="text" value="${escAttr(previous[f]??"")}" placeholder="Masukkan ${escAttr(f)}..."></div>`).join("")}</div><div class="sim-input-note">💡 Nilai ini dipakai saat kode membaca <code>$_POST["nama"]</code> atau <code>$_GET["nama"]</code>. Ini simulasi di browser, bukan request HTTP PHP sungguhan.</div>`;
+}
+function readSimInputs(i){
+ const panel=document.getElementById("siminputs"+i),data={}; if(!panel)return data;
+ panel.querySelectorAll("input[data-field]").forEach(x=>data[x.dataset.field]=x.value);
+ return data;
+}
+function escAttr(v){return String(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/'/g,"&#39;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
 function loadExample(i){
  const ed=document.getElementById("editor"+i); if(!ed)return;
  ed.value=lessons[i].examples[0][1];
+ refreshSimInputs(i);
  document.getElementById("output"+i).className="output";
  document.getElementById("output"+i).textContent="Contoh dimuat. Klik Jalankan.";
  const m=document.getElementById("runmeta"+i); if(m)m.textContent="Contoh materi siap diuji.";
@@ -612,6 +647,12 @@ function findTopOperator(expr,ops){
 }
 function phpValue(v,vars){
  v=String(v).trim();
+ const req=v.match(/^\$_(POST|GET)\s*\[\s*["']([^"']+)["']\s*\]\s*(?:\?\?\s*(.*))?$/s);
+ if(req){const bag=vars.__input||{},key=req[2];return Object.prototype.hasOwnProperty.call(bag,key)?bag[key]:(req[3]!==undefined?phpValue(req[3],vars):"");}
+ const trimCall=v.match(/^trim\s*\((.*)\)$/is);
+ if(trimCall)return String(phpValue(trimCall[1],vars)).trim();
+ const emptyCall=v.match(/^empty\s*\((.*)\)$/is);
+ if(emptyCall){const val=phpValue(emptyCall[1],vars);return val===""||val===0||val===false||val===null||val===undefined||val==="0";}
  while(v.startsWith('(')&&v.endsWith(')')){let d=0,ok=true,q=null;for(let i=0;i<v.length;i++){let c=v[i];if(q){if(c===q&&v[i-1]!=="\\")q=null;continue;}if(c==='"'||c==="'"){q=c;continue;}if(c==='(')d++;if(c===')')d--;if(d===0&&i<v.length-1){ok=false;break;}}if(ok)v=v.slice(1,-1).trim();else break;}
  if(/^"[\s\S]*"$/.test(v)||/^'[\s\S]*'$/.test(v)){
    let str=v.slice(1,-1);
@@ -673,10 +714,13 @@ function executeEcho(expr,vars){
 function executeSimpleStatements(s,vars){
  let out="";
  const statements=splitStatements(s);
- for(let raw of statements){let line=raw.trim();if(!line)continue;
+ for(let raw of statements){if(vars.__halt)break;let line=raw.trim();if(!line)continue;
    line=line.replace(/^;+/,'').trim();
    if(/^echo\s+/i.test(line)){out+=executeEcho(line.replace(/^echo\s+/i,""),vars);continue;}
    if(/^print\s+/i.test(line)){out+=String(phpValue(line.replace(/^print\s+/i,""),vars));continue;}
+   const halt=line.match(/^(?:die|exit)\s*\((.*)\)\s*;?$/is);
+   if(halt){out+=String(phpValue(halt[1],vars));vars.__halt=true;break;}
+   if(/^die\s*;?$/i.test(line)||/^exit\s*;?$/i.test(line)){vars.__halt=true;break;}
    if(parseArrayAssignment(line,vars))continue;
    if(parseAssignment(line,vars))continue;
    const inc=line.match(/^\$(\w+)\s*(\+\+|--)\s*;?$/);if(inc){const k="$"+inc[1];vars[k]=Number(vars[k]??0)+(inc[2]==='++'?1:-1);continue;}
@@ -710,6 +754,7 @@ function executeBlockProgram(s,vars){
  if(simpleEach){const brace=s.indexOf('{',simpleEach.index),b=extractBalancedBlock(s,brace),arr=vars[simpleEach[1]];if(b&&Array.isArray(arr)){for(let idx=0;idx<arr.length;idx++){if(simpleEach[2])vars[simpleEach[2]]=idx;vars[simpleEach[3]]=arr[idx];out+=executeBlockProgram(b.body,vars);}const rest=s.slice(b.end+1);if(rest.trim())out+=executeBlockProgram(rest,vars);return out;}}
 
  while(pos<s.length){
+   if(vars.__halt)break;
    while(/\s|;/.test(s[pos]||''))pos++;if(pos>=s.length)break;
    if(/^if\s*\(/.test(s.slice(pos))){
      const first=findControl(s,"if",pos);if(!first||first.start!==pos){out+=executeSimpleStatements(s.slice(pos),vars);break;}
@@ -751,13 +796,13 @@ function detectUnsupported(code){
  if(/\b(?:session_start|header|setcookie|move_uploaded_file|mail)\s*\(/i.test(code))return "server";
  return null;
 }
-function interp(s){
+function interp(s,input={}){
  const original=s;s=stripComments(stripPhp(s)).trim();
  const unsupported=detectUnsupported(original);
  if(unsupported){
    return `__SIM_WARNING__Kode ini menggunakan fitur PHP server/database yang tidak dapat dijalankan oleh simulator browser.\n\n${unsupported==='database'?'🗄️ Terdeteksi MySQL/MariaDB (mysqli/PDO).':'🖥️ Terdeteksi fitur server PHP.'}\n\nUntuk praktik nyata:\n1. Jalankan Apache dan MySQL di XAMPP.\n2. Simpan file .php di C:\\xampp\\htdocs\\...\n3. Buka melalui http://localhost/...\n\nSimulator ini tetap dapat digunakan untuk memahami konsep PHP dasar.`;
  }
- let vars={};
+ let vars={__input:input};
  // arrays and scalar assignments that occur before control structures
  for(const st of splitStatements(s)){parseArrayAssignment(st,vars);parseAssignment(st,vars);}
  s=executeFunctionsAndReturn(s,vars);
@@ -768,11 +813,18 @@ function interp(s){
 function runCode(i){
  const ed=document.getElementById("editor"+i),outEl=document.getElementById("output"+i),meta=document.getElementById("runmeta"+i);if(!ed||!outEl)return;
  const code=ed.value;savedCodes[i]=code;localStorage.setItem("phpHubCodes",JSON.stringify(savedCodes));
- try{
-   const out=interp(code);
+ refreshSimInputs(i);
+ const input=readSimInputs(i);
+ outEl.className="output";outEl.textContent="⏳ Menjalankan simulasi...";if(meta)meta.textContent="Memproses kode PHP di browser...";
+ setTimeout(()=>{
+  try{
+   const out=interp(code,input);
    if(out.startsWith("__SIM_WARNING__")){outEl.className="output warn";outEl.textContent=out.replace("__SIM_WARNING__","");if(meta)meta.textContent="⚠️ Kode memerlukan PHP server/XAMPP.";return;}
-   outEl.className="output success";outEl.textContent=out;if(meta)meta.textContent="✓ Simulator selesai menjalankan kode yang didukung.";
- }catch(e){outEl.className="output error";outEl.textContent="❌ Simulator menemukan sintaks/fitur yang belum didukung.\n\n"+e.message+"\n\nUntuk PHP asli, jalankan file .php melalui XAMPP/Apache.";if(meta)meta.textContent="Periksa kembali sintaks kode.";}
+   outEl.className="output success";
+   outEl.textContent=out.trim()?out:"✓ Program selesai dijalankan.\n\nTidak ada output yang dicetak. Jika Anda ingin menampilkan hasil, gunakan echo atau print.";
+   if(meta)meta.textContent="✓ Simulasi selesai. Input dari panel di atas sudah digunakan.";
+  }catch(e){outEl.className="output error";outEl.textContent="❌ Terjadi kesalahan pada simulator.\n\n"+e.message+"\n\nPeriksa sintaks PHP Anda atau gunakan XAMPP untuk menjalankan PHP asli.";if(meta)meta.textContent="Periksa kembali kode.";}
+ },80);
 }
 function toggleDone(i){if(done.includes(i))done=done.filter(x=>x!==i);else done.push(i);localStorage.setItem("phpHubDone",JSON.stringify(done));nav();lesson(i)}
 function roadmap(){
