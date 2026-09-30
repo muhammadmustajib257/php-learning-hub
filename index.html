@@ -321,7 +321,7 @@ const lessons=[
     "examples": [
       [
         "Struktur paling dasar",
-        "<?php\necho \"Selamat datang di kelas X RPL\";\n?>"
+        "<?php\necho \"Selamat datang di kelas XI RPL\";\n?>"
       ],
       [
         "Echo dan print",
@@ -1538,7 +1538,7 @@ function goHome(collapse=true){
   }
   if(sidebar) sidebar.classList.remove("open");
   updateNavToggle();
-  document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas X RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
+  document.getElementById("content").innerHTML=`<div class="hero"><div><h2>Belajar PHP dari Nol sampai CRUD</h2><p>Platform belajar mandiri untuk siswa kelas XI RPL: pahami konsep, lihat contoh, pelajari setiap baris, coba kode, latihan input-output, lalu lanjut ke praktik PHP + MySQL menggunakan XAMPP.</p></div><div class="hero-badge"><b>${done.length}/${lessons.length}</b><br>materi selesai</div></div>
  <div class="callout green"><b>📘 Modul lengkap:</b> Setiap materi memiliki tujuan pembelajaran, peta submateri, penjelasan konsep, analogi sehari-hari, contoh program, penjelasan setiap baris, kesalahan umum, latihan terarah, tantangan, refleksi, praktik simulator, dan panduan XAMPP.</div><div class="grid"><div class="mini"><h4>📚 Modul lengkap</h4><p>${lessons.length} bab dengan tujuan, submateri, contoh, pembahasan baris, latihan, tantangan, refleksi, dan praktik.</p></div><div class="mini"><h4>💻 Kolom mencoba</h4><p>Setiap materi mempunyai editor untuk mencoba contoh PHP dasar secara simulasi.</p></div><div class="mini"><h4>📝 Evaluasi</h4><p>Kuis mandiri dan proyek akhir Data Siswa RPL.</p></div></div>
  <div class="card"><h3>Bagaimana cara belajar?</h3><ol><li>Baca pengertian dan analoginya.</li><li>Pelajari contoh kode.</li><li>Salin contoh ke kolom praktik.</li><li>Ubah kode dan jalankan simulasi.</li><li>Kerjakan tugas dan tantangan.</li><li>Tandai materi selesai jika sudah dipahami.</li></ol><div class="callout orange"><b>Penting:</b> platform memiliki dua mode. <b>Simulator PHP Dasar</b> berjalan langsung di browser, sedangkan <b>PHP + MySQL/fitur server</b> diarahkan ke Laboratorium XAMPP agar siswa menjalankan PHP asli tanpa simulasi palsu.</div><button class="btn primary" onclick="lesson(0)">Mulai Materi 1 →</button> <button class="btn" onclick="moduleView()">📘 Buka Modul Cetak</button></div>`;
   // Selalu kembali ke posisi paling atas saat Beranda dipilih.
